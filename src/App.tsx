@@ -3,33 +3,70 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import StoriesSection from './components/StoriesSection';
-import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
 import StoriesPage from './components/StoriesPage';
 import ContactSection from './components/ContactSection';
+import AboutPage from './components/AboutPage';
+import DataResearch from './components/DataResearch';
+
+type PageType = 'home' | 'stories' | 'contact' | 'about' | 'data-research';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'stories' | 'contact'>('home');
+  const [currentPage, setCurrentPage] = useState<PageType>('home');
+
+  const handleAboutNav = () => {
+    setCurrentPage('about');
+  };
+
+  const handleDataResearchNav = () => {
+    setCurrentPage('data-research');
+  };
+
+  if (currentPage === 'data-research') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header
+          onNavigateToHome={() => setCurrentPage('home')}
+          onNavigateToStories={() => setCurrentPage('stories')}
+          onNavigateToAbout={() => setCurrentPage('about')}
+          onNavigateToContact={() => setCurrentPage('contact')}
+          onNavigateToDataResearch={() => setCurrentPage('data-research')}
+        />
+        <DataResearch onBack={() => setCurrentPage('home')} />
+        <Footer
+          onNavigateToHome={() => setCurrentPage('home')}
+          onNavigateToStories={() => setCurrentPage('stories')}
+          onNavigateToAbout={() => setCurrentPage('about')}
+          onNavigateToContact={() => setCurrentPage('contact')}
+        />
+      </div>
+    );
+  }
+
+  if (currentPage === 'about') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header
+          onNavigateToHome={() => setCurrentPage('home')}
+          onNavigateToStories={() => setCurrentPage('stories')}
+          onNavigateToAbout={() => setCurrentPage('about')}
+          onNavigateToContact={() => setCurrentPage('contact')}
+          onNavigateToDataResearch={handleDataResearchNav}
+        />
+        <AboutPage onBack={() => setCurrentPage('home')} />
+        <Footer
+          onNavigateToHome={() => setCurrentPage('home')}
+          onNavigateToStories={() => setCurrentPage('stories')}
+          onNavigateToAbout={() => setCurrentPage('about')}
+          onNavigateToContact={() => setCurrentPage('contact')}
+        />
+      </div>
+    );
+  }
 
   if (currentPage === 'stories') {
     return <StoriesPage onBack={() => setCurrentPage('home')} />;
   }
-  const handleAboutNav = () => {
-    if (currentPage === 'home') {
-      const el = document.getElementById('about');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      setCurrentPage('home');
-      setTimeout(() => {
-        const el = document.getElementById('about');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  };
 
   if (currentPage === 'contact') {
     return (
@@ -39,6 +76,7 @@ function App() {
           onNavigateToStories={() => setCurrentPage('stories')}
           onNavigateToAbout={handleAboutNav}
           onNavigateToContact={() => setCurrentPage('contact')}
+          onNavigateToDataResearch={handleDataResearchNav}
         />
         <ContactSection onBackToHome={() => setCurrentPage('home')} />
         <Footer
@@ -58,14 +96,13 @@ function App() {
         onNavigateToStories={() => setCurrentPage('stories')}
         onNavigateToAbout={handleAboutNav}
         onNavigateToContact={() => setCurrentPage('contact')}
+        onNavigateToDataResearch={handleDataResearchNav}
       />
       <Hero onShareYourJourney={() => setCurrentPage('contact')} />
       <section id="stories">
         <StoriesSection onViewAllStories={() => setCurrentPage('stories')} />
       </section>
-      <section id="about">
-        <AboutSection />
-      </section>
+      
       <Footer
         onNavigateToHome={() => setCurrentPage('home')}
         onNavigateToStories={() => setCurrentPage('stories')}

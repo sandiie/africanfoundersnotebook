@@ -7,9 +7,18 @@ interface HeaderProps {
   onNavigateToStories?: () => void;
   onNavigateToAbout?: () => void;
   onNavigateToContact?: () => void;
+  onNavigateToDataResearch?: () => void;
+  onNavigateToGetInvolved?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onNavigateToHome, onNavigateToStories, onNavigateToAbout, onNavigateToContact }) => {
+const Header: React.FC<HeaderProps> = ({ 
+  onNavigateToHome, 
+  onNavigateToStories, 
+  onNavigateToAbout, 
+  onNavigateToContact,
+  onNavigateToDataResearch,
+  onNavigateToGetInvolved 
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -36,16 +45,28 @@ const Header: React.FC<HeaderProps> = ({ onNavigateToHome, onNavigateToStories, 
               Home
             </button>
             <button 
+              onClick={onNavigateToAbout}
+              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+            >
+              About
+            </button>
+            <button
               onClick={onNavigateToStories}
               className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
             >
               Stories
             </button>
-            <button
-              onClick={onNavigateToAbout}
+            <button 
+              onClick={onNavigateToDataResearch}
               className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
             >
-              About
+              Data & Research
+            </button>
+            <button 
+              onClick={onNavigateToGetInvolved}
+              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+            >
+              Get Involved
             </button>
             <button
               className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium"
@@ -80,6 +101,15 @@ const Header: React.FC<HeaderProps> = ({ onNavigateToHome, onNavigateToStories, 
               <button 
                 onClick={() => {
                   setIsMenuOpen(false);
+                  onNavigateToAbout?.();
+                }}
+                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+              >
+                About
+              </button>
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
                   onNavigateToStories?.();
                 }}
                 className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
@@ -89,11 +119,20 @@ const Header: React.FC<HeaderProps> = ({ onNavigateToHome, onNavigateToStories, 
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
-                  onNavigateToAbout?.();
+                  onNavigateToDataResearch?.();
                 }}
                 className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
               >
-                About
+                Data & Research
+              </button>
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onNavigateToGetInvolved?.();
+                }}
+                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+              >
+                Get Involved
               </button>
               <button
                 className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium w-fit"
