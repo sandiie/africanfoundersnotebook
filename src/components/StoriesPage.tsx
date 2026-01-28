@@ -86,11 +86,9 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
     }
   ];
 
-  // Get unique tags and locations for filters
   const allTags = Array.from(new Set(allStories.flatMap(story => story.tags)));
   const allLocations = Array.from(new Set(allStories.map(story => story.location)));
 
-  // Filter stories based on search and filters
   const filteredStories = allStories.filter(story => {
     const matchesSearch = searchTerm === '' || 
       story.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -104,68 +102,124 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
     return matchesSearch && matchesTag && matchesLocation;
   });
 
+  // Color mapping for tags
+  const getTagColor = (tag: string) => {
+    const tagColors: Record<string, string> = {
+      // Technology & Innovation - Blue theme
+      'TechForGood': 'bg-blue-100 text-blue-800 border-blue-200',
+      'HealthTech': 'bg-blue-100 text-blue-800 border-blue-200',
+      'EdTech': 'bg-blue-100 text-blue-800 border-blue-200',
+      'Fintech': 'bg-blue-100 text-blue-800 border-blue-200',
+      'RemoteWork': 'bg-blue-100 text-blue-800 border-blue-200',
+      'Outsourcing': 'bg-blue-100 text-blue-800 border-blue-200',
+      'Telemedicine': 'bg-blue-100 text-blue-800 border-blue-200',
+      'MobilePayments': 'bg-blue-100 text-blue-800 border-blue-200',
+      'Innovation': 'bg-blue-100 text-blue-800 border-blue-200',
+      
+      // Sustainability & Environment - Green theme
+      'AgriTech': 'bg-green-100 text-green-800 border-green-200',
+      'SustainableFashion': 'bg-green-100 text-green-800 border-green-200',
+      'CleanEnergy': 'bg-green-100 text-green-800 border-green-200',
+      'Solar': 'bg-green-100 text-green-800 border-green-200',
+      'Sustainability': 'bg-green-100 text-green-800 border-green-200',
+      'FoodSecurity': 'bg-green-100 text-green-800 border-green-200',
+      'TextileWaste': 'bg-green-100 text-green-800 border-green-200',
+      'RuralElectrification': 'bg-green-100 text-green-800 border-green-200',
+      'SustainableDevelopment': 'bg-green-100 text-green-800 border-green-200',
+      
+      // Social & Community - Amber theme
+      'SecondTimeFounder': 'bg-amber-100 text-amber-800 border-amber-200',
+      'AfricanTalent': 'bg-amber-100 text-amber-800 border-amber-200',
+      'GlobalBusiness': 'bg-amber-100 text-amber-800 border-amber-200',
+      'SocialImpact': 'bg-amber-100 text-amber-800 border-amber-200',
+      'Artisans': 'bg-amber-100 text-amber-800 border-amber-200',
+      'Culture': 'bg-amber-100 text-amber-800 border-amber-200',
+      'FinancialInclusion': 'bg-amber-100 text-amber-800 border-amber-200',
+      'RuralDevelopment': 'bg-amber-100 text-amber-800 border-amber-200',
+      'Engineering': 'bg-amber-100 text-amber-800 border-amber-200',
+      
+      // Default for new tags
+      'DeveloperCommunity': 'bg-purple-100 text-purple-800 border-purple-200',
+      'GlobalImpact': 'bg-purple-100 text-purple-800 border-purple-200',
+      'Pivot': 'bg-purple-100 text-purple-800 border-purple-200',
+      'SmallholderFarmers': 'bg-purple-100 text-purple-800 border-purple-200',
+      'Education': 'bg-purple-100 text-purple-800 border-purple-200',
+      'Teacher': 'bg-purple-100 text-purple-800 border-purple-200',
+      'NorthAfrica': 'bg-purple-100 text-purple-800 border-purple-200',
+      'RuralHealth': 'bg-purple-100 text-purple-800 border-purple-200',
+      'Doctor': 'bg-purple-100 text-amber-800 border-amber-200',
+      'Unbanked': 'bg-purple-100 text-purple-800 border-purple-200',
+    };
+    
+    return tagColors[tag] || 'bg-gray-100 text-gray-800 border-gray-200';
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50/30 to-white">
       {/* Header */}
-      <div className="bg-white shadow-sm sticky top-0 z-40">
+      <div className="bg-white shadow-sm sticky top-0 z-40 border-b border-amber-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors"
+              className="flex items-center gap-2 text-gray-700 hover:text-amber-700 transition-colors font-medium group"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
               Back to Home
             </button>
             <div className="text-center">
               <h1 className="text-3xl font-bold text-gray-900">All Stories</h1>
-              <p className="text-gray-600 mt-1">{filteredStories.length} stories documented</p>
+              <p className="text-amber-600 mt-1 font-medium">{filteredStories.length} stories documented</p>
             </div>
-            <div className="w-24"></div> {/* Spacer for centering */}
+            <div className="w-24"></div>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Search and Filters */}
-        <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm p-6 mb-8 border border-amber-50">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="relative group">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-amber-600 group-focus-within:text-amber-700 transition-colors" />
               <input
                 type="text"
                 placeholder="Search stories, founders, companies..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-amber-200 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-amber-50/50 transition-all duration-300 hover:bg-white"
               />
             </div>
 
-            {/* Tag Filter */}
-            <div className="relative">
-              <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            {/* Tags Filter */}
+            <div className="relative group">
+              <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-amber-600 group-focus-within:text-amber-700 transition-colors" />
               <select
                 value={selectedTag}
                 onChange={(e) => setSelectedTag(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent appearance-none bg-white"
+                className="w-full pl-10 pr-4 py-3 border border-amber-200 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent appearance-none bg-amber-50/50 transition-all duration-300 hover:bg-white cursor-pointer"
               >
-                <option value="">All Tags</option>
+                <option value="" className="text-gray-500">All Tags</option>
                 {allTags.map(tag => (
-                  <option key={tag} value={tag}>{tag}</option>
+                  <option key={tag} value={tag} className="py-1">
+                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${getTagColor(tag).replace('border-', '')}`}>
+                      {tag}
+                    </span>
+                  </option>
                 ))}
               </select>
             </div>
 
             {/* Location Filter */}
-            <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="relative group">
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-amber-600 group-focus-within:text-amber-700 transition-colors" />
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent appearance-none bg-white"
+                className="w-full pl-10 pr-4 py-3 border border-amber-200 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent appearance-none bg-amber-50/50 transition-all duration-300 hover:bg-white cursor-pointer"
               >
-                <option value="">All Locations</option>
+                <option value="" className="text-gray-500">All Locations</option>
                 {allLocations.map(location => (
                   <option key={location} value={location}>{location}</option>
                 ))}
@@ -179,25 +233,78 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
                 setSelectedTag('');
                 setSelectedLocation('');
               }}
-              className="flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 rounded-full hover:border-orange-500 hover:text-orange-600 transition-colors"
+              className="flex items-center justify-center gap-2 px-6 py-3 border border-amber-300 text-amber-700 rounded-full hover:bg-amber-50 hover:border-amber-500 hover:shadow-sm transition-all duration-300 font-medium"
             >
               <Filter className="h-5 w-5" />
               Clear Filters
             </button>
           </div>
+
+          {/* Active Filters */}
+          {(searchTerm || selectedTag || selectedLocation) && (
+            <div className="mt-4 pt-4 border-t border-amber-100">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-sm text-gray-600">Active filters:</span>
+                {searchTerm && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm">
+                    Search: "{searchTerm}"
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="text-amber-600 hover:text-amber-800 ml-1"
+                    >
+                      ×
+                    </button>
+                  </span>
+                )}
+                {selectedTag && (
+                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${getTagColor(selectedTag)}`}>
+                    Tag: {selectedTag}
+                    <button
+                      onClick={() => setSelectedTag('')}
+                      className="ml-1 opacity-70 hover:opacity-100"
+                    >
+                      ×
+                    </button>
+                  </span>
+                )}
+                {selectedLocation && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 border border-blue-200 rounded-full text-sm">
+                    Location: {selectedLocation}
+                    <button
+                      onClick={() => setSelectedLocation('')}
+                      className="text-blue-600 hover:text-blue-800 ml-1"
+                    >
+                      ×
+                    </button>
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Stories Grid */}
         {filteredStories.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredStories.map((story, index) => (
-              <FeaturedStory key={index} {...story} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredStories.map((story, index) => (
+                <div key={index} className="transform transition-all duration-300 hover:-translate-y-2">
+                  <FeaturedStory {...story} />
+                </div>
+              ))}
+            </div>
+
+            {/* Results Count */}
+            <div className="mt-8 pt-8 border-t border-amber-100 text-center">
+              <p className="text-gray-600">
+                Showing <span className="font-semibold text-amber-700">{filteredStories.length}</span> of <span className="font-semibold text-gray-900">{allStories.length}</span> stories
+              </p>
+            </div>
+          </>
         ) : (
           <div className="text-center py-16">
-            <div className="bg-white rounded-2xl p-12 shadow-sm">
-              <Search className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+            <div className="bg-white rounded-2xl p-12 shadow-sm border border-amber-100 max-w-2xl mx-auto">
+              <Search className="h-16 w-16 text-amber-400 mx-auto mb-4 opacity-50" />
               <h3 className="text-xl font-semibold text-gray-900 mb-2">No stories found</h3>
               <p className="text-gray-600 mb-6">
                 Try adjusting your search terms or filters to find more stories.
@@ -208,7 +315,7 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
                   setSelectedTag('');
                   setSelectedLocation('');
                 }}
-                className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 font-medium"
+                className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 font-medium hover:from-amber-600 hover:to-amber-700"
               >
                 Show All Stories
               </button>
@@ -217,7 +324,7 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
         )}
 
         {/* Newsletter Signup */}
-        <div className="mt-20 bg-white rounded-2xl shadow-lg p-8 text-center">
+        <div className="mt-20 bg-gradient-to-br from-amber-50 to-white rounded-2xl shadow-lg p-8 text-center border border-amber-100">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
             Get New Stories in Your Inbox
           </h3>
@@ -229,12 +336,15 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-amber-200 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white"
             />
-            <button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 font-medium">
+            <button className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 font-medium hover:from-amber-600 hover:to-amber-700">
               Subscribe
             </button>
           </div>
+          <p className="text-sm text-gray-500 mt-4">
+            We respect your privacy. Unsubscribe at any time.
+          </p>
         </div>
       </div>
     </div>

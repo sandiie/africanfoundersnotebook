@@ -23,7 +23,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ onBackToHome }) => {
         {onBackToHome && (
           <button
             onClick={onBackToHome}
-            className="mb-6 text-orange-600 hover:text-orange-800 font-medium underline"
+            className="mb-6 text-amber-600 hover:text-amber-800 font-medium underline"
           >
             ← Back to Home
           </button>
@@ -63,7 +63,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ onBackToHome }) => {
           />
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+            className="w-full bg-gradient-to-r from-amber-500 to-yellow-800 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
           >
             Submit Story
           </button>
