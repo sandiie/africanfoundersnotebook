@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   ArrowLeft, 
@@ -41,7 +42,6 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
     console.log('Form submitted:', formData);
     setSubmitted(true);
     
-    // Open email client with pre-filled data
     const subject = `Get Involved - ${formData.interest}`;
     const body = `Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\nRole: ${formData.role}\nInterest: ${formData.interest}\n\nMessage:\n${formData.message}`;
     window.location.href = `mailto:susanmaina84@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -72,9 +72,9 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
       title: "Share Your Story",
       description: "Contribute your founder journey to our research. Your experiences help shape the narrative of African entrepreneurship.",
       action: "Share Your Story",
-      color: "from-orange-500 to-red-500",
-      gradient: "from-orange-50 to-red-50",
-      iconBg: "bg-gradient-to-br from-orange-500 to-red-500",
+      color: "from-[#1677C8] to-[#159447]",
+      gradient: "from-[#F7F5EF] to-white",
+      iconBg: "bg-[#1677C8]",
       type: "contact"
     },
     {
@@ -82,9 +82,9 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
       title: "Partner With Us",
       description: "Collaborate on research projects, events, or content. Let's work together to amplify African founder voices.",
       action: "Partner Now",
-      color: "from-blue-500 to-indigo-500",
-      gradient: "from-blue-50 to-indigo-50",
-      iconBg: "bg-gradient-to-br from-blue-500 to-indigo-500",
+      color: "from-[#159447] to-[#102019]",
+      gradient: "from-[#F7F5EF] to-white",
+      iconBg: "bg-[#159447]",
       type: "form"
     },
     {
@@ -92,9 +92,9 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
       title: "Join Our Community",
       description: "Connect with fellow founders, researchers, and ecosystem builders across Africa. Join our growing network.",
       action: "Join Community",
-      color: "from-purple-500 to-pink-500",
-      gradient: "from-purple-50 to-pink-50",
-      iconBg: "bg-gradient-to-br from-purple-500 to-pink-500",
+      color: "from-[#102019] to-[#1677C8]",
+      gradient: "from-[#F7F5EF] to-white",
+      iconBg: "bg-[#102019]",
       type: "external"
     },
     {
@@ -102,9 +102,9 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
       title: "Spread the Word",
       description: "Help us reach more founders across Africa by sharing our work within your networks.",
       action: "Share Now",
-      color: "from-emerald-500 to-teal-500",
-      gradient: "from-emerald-50 to-teal-50",
-      iconBg: "bg-gradient-to-br from-emerald-500 to-teal-500",
+      color: "from-[#F2C230] to-[#159447]",
+      gradient: "from-[#F7F5EF] to-white",
+      iconBg: "bg-[#159447]",
       type: "share"
     }
   ];
@@ -158,45 +158,59 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-orange-50/20 to-white">
-      {/* Header with Back Button */}
+    <div className="min-h-screen bg-[#F7F5EF] text-[#18251F]">
+
+      {/* Header */}
       <div className="relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pt-6 sm:pt-8">
           <button 
             onClick={onBack}
-            className="group inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors font-medium text-sm sm:text-base"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-[#5F6B65] hover:text-[#159447] transition-colors duration-300"
           >
-            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             Back to Home
           </button>
         </div>
 
-        {/* Hero Section */}
-        <div className="pt-8 sm:pt-12 md:pt-16 pb-12 sm:pb-16 px-4">
+        {/* Hero */}
+        <div className="pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 to-red-100 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full mb-4 sm:mb-6 shadow-sm">
-              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-orange-600" />
-              <span className="text-xs sm:text-sm font-semibold text-orange-700">Join Our Community</span>
+
+            <div className="flex justify-center mb-7">
+              <span className="w-12 h-[3px] bg-[#1677C8]"></span>
+              <span className="w-12 h-[3px] bg-[#159447]"></span>
+              <span className="w-12 h-[3px] bg-[#F2C230]"></span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">
+
+            <div className="inline-flex items-center gap-2 mb-5">
+              <Sparkles className="h-4 w-4 text-[#159447]" />
+              <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#159447]">
+                Join Our Community
+              </span>
+            </div>
+
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-[#18251F] mb-5">
               Get Involved
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
+
+            <p className="text-base sm:text-lg text-[#66716B] mb-8 max-w-2xl mx-auto leading-relaxed">
               Join us in documenting and amplifying African entrepreneurship. Whether you're a founder, researcher, or ecosystem builder, there's a place for you here.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button 
                 onClick={scrollToForm}
-                className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-5 sm:px-8 py-2.5 sm:py-4 rounded-full hover:shadow-xl transition-all duration-300 font-semibold inline-flex items-center justify-center gap-2 hover:scale-105 text-sm sm:text-base"
+                className="bg-[#102019] text-white px-7 py-3.5 rounded-full hover:bg-[#159447] transition-all duration-300 font-semibold inline-flex items-center justify-center gap-2 hover:-translate-y-0.5"
               >
                 Get Started
-                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                <ArrowRight className="h-4 w-4" />
               </button>
+
               <a 
                 href={`mailto:${contactDetails.email}`}
-                className="border-2 border-gray-300 text-gray-700 px-5 sm:px-8 py-2.5 sm:py-4 rounded-full hover:border-orange-500 hover:text-orange-600 transition-all duration-300 font-semibold inline-flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="border border-[#CBC5B7] bg-white text-[#18251F] px-7 py-3.5 rounded-full hover:border-[#159447] hover:text-[#159447] transition-all duration-300 font-semibold inline-flex items-center justify-center gap-2"
               >
-                <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Mail className="h-4 w-4" />
                 Email Us Directly
               </a>
             </div>
@@ -205,205 +219,266 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 md:pb-20">
-        
-        {/* Contact Details Banner */}
-        <div className="mb-12 sm:mb-16">
-          <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-5 sm:p-6 md:p-8 text-white shadow-xl">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6 lg:gap-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pb-20">
+
+        {/* Contact Details */}
+        <div className="mb-16">
+          <div className="bg-[#102019] p-6 sm:p-8 md:p-10 text-white">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+
               <div className="text-center lg:text-left">
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2">Partner With Us</h3>
-                <p className="text-gray-300 text-xs sm:text-sm md:text-base">
-                  Reach out directly to Susan for partnership opportunities
+                <p className="text-xs uppercase tracking-[0.2em] text-[#F2C230] font-semibold mb-2">
+                  01 / Connect
+                </p>
+                <h3 className="font-serif text-2xl sm:text-3xl mb-2">
+                  Partner With Us
+                </h3>
+                <p className="text-[#B9C2BC] text-sm">
+                  Reach out directly to Susan for partnership opportunities.
                 </p>
               </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 w-full lg:w-auto">
-                {/* Phone */}
+
+              <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+
                 <a 
                   href={`tel:${contactDetails.phone}`}
-                  className="flex items-center gap-3 group w-full sm:w-auto justify-center sm:justify-start hover:bg-white/5 rounded-lg p-2 transition-colors"
+                  className="flex items-center gap-3 group p-3 border border-white/10 hover:border-[#159447]/50 transition-all"
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-orange-500/30 transition-colors flex-shrink-0">
-                    <Phone className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#159447] transition-colors">
+                    <Phone className="h-5 w-5" />
                   </div>
-                  <div className="text-left">
-                    <div className="text-xs sm:text-sm text-orange-300">Call Susan</div>
-                    <div className="text-sm sm:text-base md:text-lg font-semibold group-hover:text-orange-400 transition-colors">
+
+                  <div>
+                    <div className="text-xs uppercase tracking-wider text-[#F2C230]">
+                      Call Susan
+                    </div>
+                    <div className="text-base font-semibold group-hover:text-[#159447] transition-colors">
                       {contactDetails.phone}
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5 flex items-center gap-1">
-                      <Clock className="h-2 w-2 sm:h-3 sm:w-3" />
+                    <div className="text-xs text-[#8F9A94] mt-1 flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
                       {contactDetails.available}
                     </div>
                   </div>
                 </a>
-                
-                {/* Email */}
+
                 <a 
                   href={`mailto:${contactDetails.email}`}
-                  className="flex items-center gap-3 group w-full sm:w-auto justify-center sm:justify-start hover:bg-white/5 rounded-lg p-2 transition-colors"
+                  className="flex items-center gap-3 group p-3 border border-white/10 hover:border-[#159447]/50 transition-all"
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-orange-500/30 transition-colors flex-shrink-0">
-                    <Mail className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
+                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#159447] transition-colors">
+                    <Mail className="h-5 w-5" />
                   </div>
-                  <div className="text-left">
-                    <div className="text-xs sm:text-sm text-orange-300">Email Susan</div>
-                    <div className="text-xs sm:text-sm md:text-lg font-semibold group-hover:text-orange-400 transition-colors break-all">
+
+                  <div>
+                    <div className="text-xs uppercase tracking-wider text-[#F2C230]">
+                      Email Susan
+                    </div>
+                    <div className="text-sm sm:text-base font-semibold group-hover:text-[#159447] transition-colors break-all">
                       {contactDetails.email}
                     </div>
-                    <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">Typically replies within 24 hours</div>
+                    <div className="text-xs text-[#8F9A94] mt-1">
+                      Typically replies within 24 hours
+                    </div>
                   </div>
                 </a>
+
               </div>
             </div>
           </div>
         </div>
 
         {/* Ways to Get Involved */}
-        <div className="mb-16 sm:mb-20">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3">
-            Ways to Get Involved
-          </h2>
-          <p className="text-gray-600 text-center mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base px-2">
-            Choose how you'd like to contribute to documenting African entrepreneurship
-          </p>
+        <div className="mb-20">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.25em] text-[#159447] font-semibold mb-3">
+              02 / Participate
+            </p>
+
+            <h2 className="font-serif text-3xl sm:text-4xl font-medium text-[#18251F] mb-3">
+              Ways to Get Involved
+            </h2>
+
+            <p className="text-[#66716B] max-w-2xl mx-auto text-sm sm:text-base">
+              Choose how you'd like to contribute to documenting African entrepreneurship.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
             {waysToGetInvolved.map((way, index) => (
               <div 
                 key={index} 
-                className={`bg-gradient-to-br ${way.gradient} rounded-2xl p-5 sm:p-6 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group`}
+                className="bg-white border border-[#D5D0C4] p-6 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(16,32,25,0.07)] transition-all duration-300 group"
               >
-                <div className={`w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl ${way.iconBg} flex items-center justify-center mb-3 sm:mb-4 md:mb-6 shadow-lg`}>
-                  <way.icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white" />
+
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-12 h-12 rounded-full ${way.iconBg} flex items-center justify-center`}>
+                    <way.icon className="h-5 w-5 text-white" />
+                  </div>
+
+                  <span className="text-xs font-semibold text-[#9AA19C]">
+                    0{index + 1}
+                  </span>
                 </div>
-                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-2">
+
+                <h3 className="font-serif text-xl text-[#18251F] mb-3">
                   {way.title}
                 </h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
+
+                <p className="text-sm text-[#66716B] leading-relaxed mb-6">
                   {way.description}
                 </p>
+
                 <button 
                   onClick={() => handleActionClick(way.type, way.action)}
-                  className={`w-full py-2 sm:py-2.5 md:py-3 bg-gradient-to-r ${way.color} text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold text-xs sm:text-sm md:text-base hover:scale-[1.02] px-2`}
+                  className="w-full py-3 bg-[#102019] text-white hover:bg-[#159447] transition-all duration-300 font-semibold text-sm inline-flex items-center justify-center gap-2 group-hover:shadow-md"
                 >
                   {way.action}
+                  <ArrowRight className="h-4 w-4" />
                 </button>
+
               </div>
             ))}
+
           </div>
         </div>
 
-        {/* Contact Form and Info Side by Side */}
-        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
+        {/* Form + Info */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+
           {/* Contact Form */}
-          <div id="contact-form" className="bg-white rounded-2xl p-5 sm:p-6 md:p-8 border border-gray-200 shadow-lg scroll-mt-20">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                <MessageSquare className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-white" />
-              </div>
-              Send a Message
-            </h2>
-            
+          <div 
+            id="contact-form" 
+            className="bg-white p-6 sm:p-8 md:p-10 border border-[#D5D0C4] scroll-mt-20"
+          >
+
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-[#159447] font-semibold mb-3">
+                03 / Connect
+              </p>
+
+              <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#18251F] flex items-center gap-3">
+                <MessageSquare className="h-5 w-5 text-[#159447]" />
+                Send a Message
+              </h2>
+            </div>
+
             {submitted ? (
-              <div className="text-center py-8 sm:py-12">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-50 to-red-50 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <CheckCircle className="h-8 w-8 sm:h-10 sm:w-10 text-orange-600" />
+              <div className="text-center py-12">
+                <div className="w-16 h-16 bg-[#159447]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="h-8 w-8 text-[#159447]" />
                 </div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">
+
+                <h3 className="font-serif text-2xl text-[#18251F] mb-2">
                   Thank You
                 </h3>
-                <p className="text-sm sm:text-base text-gray-600 px-2">
+
+                <p className="text-[#66716B] text-sm">
                   Your message has been sent. Susan will get back to you soon.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+              <form onSubmit={handleSubmit} className="space-y-5">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
                       Full Name *
                     </label>
+
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-gray-400" />
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
+
                       <input
                         type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full pl-8 sm:pl-9 md:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 md:py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-colors text-xs sm:text-sm md:text-base"
+                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
                         placeholder="Your name"
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
                       Email Address *
                     </label>
+
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-gray-400" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
+
                       <input
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full pl-8 sm:pl-9 md:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 md:py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-colors text-xs sm:text-sm md:text-base"
+                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
                         placeholder="your@email.com"
                       />
                     </div>
                   </div>
+
                 </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
                       Organization
                     </label>
+
                     <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-gray-400" />
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
+
                       <input
                         type="text"
                         name="organization"
                         value={formData.organization}
                         onChange={handleChange}
-                        className="w-full pl-8 sm:pl-9 md:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 md:py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-colors text-xs sm:text-sm md:text-base"
+                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
                         placeholder="Company or organization"
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
                       Your Role
                     </label>
+
                     <div className="relative">
-                      <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-gray-400" />
+                      <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
+
                       <input
                         type="text"
                         name="role"
                         value={formData.role}
                         onChange={handleChange}
-                        className="w-full pl-8 sm:pl-9 md:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 md:py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-colors text-xs sm:text-sm md:text-base"
+                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
                         placeholder="Founder, Researcher, etc."
                       />
                     </div>
                   </div>
+
                 </div>
-                
+
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
                     How would you like to be involved? *
                   </label>
+
                   <select
                     name="interest"
                     value={formData.interest}
                     onChange={handleChange}
                     required
-                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-colors bg-white text-xs sm:text-sm md:text-base"
+                    className="w-full px-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
                   >
                     <option value="">Select an option</option>
                     <option value="share-story">Share my founder story</option>
@@ -413,119 +488,153 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
                     <option value="other">Other</option>
                   </select>
                 </div>
-                
+
                 <div>
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
                     Your Message *
                   </label>
+
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    rows={4}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 rounded-xl border border-gray-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-colors resize-none text-xs sm:text-sm md:text-base"
+                    rows={5}
+                    className="w-full px-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all resize-none"
                     placeholder="Tell us how you'd like to get involved..."
                   />
                 </div>
-                
+
                 <button
                   type="submit"
-                  className="w-full py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center gap-2 hover:scale-[1.02] text-sm sm:text-base"
+                  className="w-full py-3.5 bg-[#102019] text-white hover:bg-[#159447] transition-all duration-300 font-semibold flex items-center justify-center gap-2"
                 >
-                  <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Send className="h-4 w-4" />
                   Send Message
                 </button>
+
               </form>
             )}
+
           </div>
-          
+
           {/* Contact Info */}
-          <div className="space-y-4 sm:space-y-6 md:space-y-8">
+          <div className="space-y-6">
+
             {/* Quick Contact */}
-            <div className="bg-gradient-to-b from-orange-50 to-white rounded-2xl p-5 sm:p-6 md:p-8 border border-orange-100 shadow-lg">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4">
+            <div className="bg-[#EAE5DA] p-6 sm:p-8 border border-[#D5D0C4]">
+
+              <p className="text-xs uppercase tracking-[0.2em] text-[#159447] font-semibold mb-3">
+                04 / Reach Us
+              </p>
+
+              <h3 className="font-serif text-2xl sm:text-3xl text-[#18251F] mb-6">
                 Quick Contact
               </h3>
-              
-              <div className="space-y-3 sm:space-y-4 md:space-y-6">
+
+              <div className="space-y-4">
+
                 <a 
                   href={`tel:${contactDetails.phone}`}
-                  className="flex items-start gap-3 p-3 rounded-xl bg-white border border-gray-200 hover:border-orange-300 hover:shadow-md transition-all group"
+                  className="flex items-start gap-4 p-4 bg-white border border-[#D5D0C4] hover:border-[#159447] transition-all group"
                 >
-                  <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <Phone className="h-5 w-5 text-[#159447] mt-1 flex-shrink-0" />
+
                   <div>
-                    <div className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors text-sm sm:text-base">
+                    <div className="font-semibold text-[#18251F] group-hover:text-[#159447] transition-colors text-sm">
                       Call Susan
                     </div>
-                    <div className="text-gray-600 mt-1 text-base sm:text-lg font-medium">
+
+                    <div className="text-[#4F5D56] mt-1 font-medium">
                       {contactDetails.phone}
                     </div>
-                    <div className="text-xs sm:text-sm text-gray-500 mt-1 flex items-center gap-1">
+
+                    <div className="text-xs text-[#788079] mt-2 flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       Available: {contactDetails.available}
                     </div>
                   </div>
                 </a>
-                
+
                 <a 
                   href={`mailto:${contactDetails.email}`}
-                  className="flex items-start gap-3 p-3 rounded-xl bg-white border border-gray-200 hover:border-orange-300 hover:shadow-md transition-all group"
+                  className="flex items-start gap-4 p-4 bg-white border border-[#D5D0C4] hover:border-[#159447] transition-all group"
                 >
-                  <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600 mt-1 flex-shrink-0" />
+                  <Mail className="h-5 w-5 text-[#159447] mt-1 flex-shrink-0" />
+
                   <div>
-                    <div className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors text-sm sm:text-base">
+                    <div className="font-semibold text-[#18251F] group-hover:text-[#159447] transition-colors text-sm">
                       Email Susan
                     </div>
-                    <div className="text-gray-600 mt-1 text-sm sm:text-lg font-medium break-all">
+
+                    <div className="text-[#4F5D56] mt-1 text-sm font-medium break-all">
                       {contactDetails.email}
                     </div>
-                    <div className="text-xs sm:text-sm text-gray-500 mt-1">
+
+                    <div className="text-xs text-[#788079] mt-2">
                       Typically replies within 24 hours
                     </div>
                   </div>
                 </a>
+
               </div>
             </div>
-            
+
             {/* What Happens Next */}
-            <div className="bg-gradient-to-b from-blue-50 to-white rounded-2xl p-5 sm:p-6 md:p-8 border border-blue-100 shadow-lg">
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4">
+            <div className="bg-[#102019] p-6 sm:p-8 text-white">
+
+              <p className="text-xs uppercase tracking-[0.2em] text-[#F2C230] font-semibold mb-3">
+                05 / The Process
+              </p>
+
+              <h3 className="font-serif text-2xl sm:text-3xl mb-6">
                 What Happens Next?
               </h3>
-              
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white shadow-sm">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white flex items-center justify-center flex-shrink-0 text-xs sm:text-sm font-bold">
+
+              <div className="space-y-4">
+
+                <div className="flex items-start gap-4 border-b border-white/10 pb-4">
+                  <div className="w-8 h-8 rounded-full bg-[#159447] text-white flex items-center justify-center flex-shrink-0 text-xs font-bold">
                     1
                   </div>
+
                   <div>
-                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Initial Contact</h4>
-                    <p className="text-gray-600 text-xs sm:text-sm mt-0.5">Susan will respond to discuss your interest</p>
+                    <h4 className="font-semibold text-sm">Initial Contact</h4>
+                    <p className="text-[#AEB8B2] text-xs mt-1 leading-relaxed">
+                      Susan will respond to discuss your interest.
+                    </p>
                   </div>
                 </div>
-                
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white shadow-sm">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white flex items-center justify-center flex-shrink-0 text-xs sm:text-sm font-bold">
+
+                <div className="flex items-start gap-4 border-b border-white/10 pb-4">
+                  <div className="w-8 h-8 rounded-full bg-[#1677C8] text-white flex items-center justify-center flex-shrink-0 text-xs font-bold">
                     2
                   </div>
+
                   <div>
-                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Discussion</h4>
-                    <p className="text-gray-600 text-xs sm:text-sm mt-0.5">Explore how you can best contribute to the initiative</p>
+                    <h4 className="font-semibold text-sm">Discussion</h4>
+                    <p className="text-[#AEB8B2] text-xs mt-1 leading-relaxed">
+                      Explore how you can best contribute to the initiative.
+                    </p>
                   </div>
                 </div>
-                
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white shadow-sm">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white flex items-center justify-center flex-shrink-0 text-xs sm:text-sm font-bold">
+
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#F2C230] text-[#102019] flex items-center justify-center flex-shrink-0 text-xs font-bold">
                     3
                   </div>
+
                   <div>
-                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Collaboration</h4>
-                    <p className="text-gray-600 text-xs sm:text-sm mt-0.5">Start working together on documenting African entrepreneurship</p>
+                    <h4 className="font-semibold text-sm">Collaboration</h4>
+                    <p className="text-[#AEB8B2] text-xs mt-1 leading-relaxed">
+                      Start working together on documenting African entrepreneurship.
+                    </p>
                   </div>
                 </div>
+
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -534,3 +643,4 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
 };
 
 export default GetInvolved;
+

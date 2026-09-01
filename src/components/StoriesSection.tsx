@@ -38,56 +38,171 @@ const StoriesSection: React.FC<StoriesSectionProps> = ({ onViewAllStories }) => 
   ];
 
   return (
-    <section id="stories" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Featured Stories
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Real journeys, honest reflections, and practical insights from impact-driven founders 
-            across the continent. These are the stories that don't always make the headlines, 
-            but shape the future of African entrepreneurship.
-          </p>
+    <section
+      id="stories"
+      className="relative overflow-hidden bg-[#F7F5EF] py-24 lg:py-32"
+    >
+
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-full h-px bg-[#D5D0C4]" />
+
+      <div className="absolute -left-40 top-32 w-80 h-80 rounded-full border border-[#159447]/10 pointer-events-none" />
+
+      <div className="absolute -right-40 bottom-20 w-96 h-96 rounded-full border border-[#F2C230]/10 pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
+        {/* SECTION HEADING */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+
+          <div className="max-w-3xl">
+
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-10 h-px bg-[#F2C230]" />
+
+              <span className="text-[11px] uppercase tracking-[0.25em] text-[#159447] font-semibold">
+                From the Notebook
+              </span>
+            </div>
+
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#102019] leading-[1.05] tracking-[-0.025em]">
+              Stories worth
+              <br />
+              <span className="italic text-[#159447]">
+                remembering.
+              </span>
+            </h2>
+
+            <p className="mt-6 text-[#66716B] text-base sm:text-lg leading-relaxed max-w-2xl">
+              Real journeys, honest reflections, and practical insights from
+              impact-driven founders across the continent. These are the stories
+              that don't always make the headlines, but shape the future of
+              African entrepreneurship.
+            </p>
+
+          </div>
+
+          {/* Small archive label */}
+          <div className="hidden lg:flex items-center gap-4 pb-2">
+
+            <div className="text-right">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#8A918C]">
+                Featured
+              </p>
+
+              <p className="font-serif text-2xl text-[#102019]">
+                03 Stories
+              </p>
+            </div>
+
+            <div className="w-12 h-12 rounded-full border border-[#D5D0C4] flex items-center justify-center">
+              <span className="w-2 h-2 rounded-full bg-[#159447]" />
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Stories Carousel */}
-        <div className="mb-12">
+        {/* TOP ACCENT LINE */}
+        <div className="flex w-full h-[3px] mb-8">
+          <div className="w-1/3 bg-[#1677C8]" />
+          <div className="w-1/3 bg-[#159447]" />
+          <div className="w-1/3 bg-[#F2C230]" />
+        </div>
+
+        {/* STORIES CAROUSEL */}
+        <div className="relative mb-14">
+
           <StoriesCarousel stories={featuredStories} />
+
         </div>
 
-        {/* View All Stories Button */}
-        <div className="text-center">
-          <button 
+        {/* VIEW ALL */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-[#D5D0C4] pt-8">
+
+          <div className="text-center sm:text-left">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[#159447] font-medium mb-1">
+              Continue exploring
+            </p>
+
+            <p className="font-serif text-xl text-[#102019]">
+              There are more stories to discover.
+            </p>
+          </div>
+
+          <button
             onClick={onViewAllStories}
-            className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-full hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center mx-auto group"
+            className="group flex items-center gap-3 bg-[#102019] text-white px-7 py-3.5 text-sm font-semibold hover:bg-[#159447] hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
           >
             View All Stories
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+
+            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors">
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+            </span>
           </button>
+
         </div>
 
-        {/* Newsletter Signup */}
-        <div className="mt-20 bg-white rounded-2xl shadow-lg p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            Get New Stories in Your Inbox
-          </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Join thousands of founders, investors, and ecosystem builders who receive our weekly newsletter 
-            with the latest stories, insights, and opportunities from across Africa.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-            />
-            <button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full hover:shadow-lg transition-all duration-300 font-medium">
-              Subscribe
-            </button>
+        {/* NEWSLETTER */}
+        <div className="relative overflow-hidden mt-24 bg-[#102019] px-7 py-12 sm:px-12 sm:py-14">
+
+          {/* Decorative circles */}
+          <div className="absolute -right-28 -top-28 w-80 h-80 rounded-full border border-white/[0.06]" />
+
+          <div className="absolute right-10 top-10 w-32 h-32 rounded-full border border-[#F2C230]/15" />
+
+          <div className="absolute -left-20 -bottom-24 w-64 h-64 rounded-full border border-[#159447]/10" />
+
+          <div className="relative z-10 max-w-2xl mx-auto text-center">
+
+            <div className="flex items-center justify-center gap-3 mb-5">
+
+              <span className="w-8 h-px bg-[#F2C230]" />
+
+              <span className="text-[10px] uppercase tracking-[0.25em] text-[#F2C230]">
+                The Notebook
+              </span>
+
+              <span className="w-8 h-px bg-[#F2C230]" />
+
+            </div>
+
+            <h3 className="font-serif text-3xl sm:text-4xl text-white leading-tight mb-4">
+              Keep the stories coming.
+            </h3>
+
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-8">
+              Get new founder stories, insights and opportunities from across
+              Africa delivered straight to your inbox.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-5 py-3.5 bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-[#F2C230] transition-all duration-300 text-sm"
+              />
+
+              <button className="bg-[#F2C230] text-[#102019] px-7 py-3.5 font-semibold text-sm hover:bg-[#E7B719] transition-all duration-300">
+                Subscribe
+              </button>
+
+            </div>
+
           </div>
+
+          {/* Bottom brand stripe */}
+          <div className="absolute bottom-0 left-0 right-0 h-[3px] flex">
+            <div className="w-1/3 bg-[#1677C8]" />
+            <div className="w-1/3 bg-[#159447]" />
+            <div className="w-1/3 bg-[#F2C230]" />
+          </div>
+
         </div>
+
       </div>
+
     </section>
   );
 };

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import IGIcon from '../assets/IG icon 4.png';
+import MainLogo from '../assets/Main logo.jpeg';
 
 interface HeaderProps {
   onNavigateToHome?: () => void;
   onNavigateToStories?: () => void;
   onNavigateToAbout?: () => void;
   onNavigateToContact?: () => void;
-  onNavigateToDataResearch?: () => void;  // ADD THIS
-  onNavigateToGetInvolved?: () => void;   // ADD THIS
+  onNavigateToDataResearch?: () => void;
+  onNavigateToGetInvolved?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
@@ -16,136 +16,223 @@ const Header: React.FC<HeaderProps> = ({
   onNavigateToStories, 
   onNavigateToAbout, 
   onNavigateToContact,
-  onNavigateToDataResearch,  // ADD THIS
-  onNavigateToGetInvolved   // ADD THIS
+  onNavigateToDataResearch,
+  onNavigateToGetInvolved
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-lg">
-              <img src={IGIcon} alt="IG Icon" className="h-8 w-8 object-contain" />
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F7F5EF]/95 backdrop-blur-md border-b border-[#DDD8CC]">
+
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
+        <div className="flex justify-between items-center h-[76px]">
+
+          {/* LOGO */}
+          <div
+            className="flex items-center gap-3 cursor-pointer group"
+            onClick={onNavigateToHome}
+          >
+            <div className="flex items-center justify-center w-10 h-10 rounded-full
+              bg-white border border-[#DDD8CC]
+              group-hover:border-[#159447]
+              transition-all duration-300"
+            >
+              <img
+                src={MainLogo}
+                alt="African Founders Notebook"
+                className="h-7 w-7 object-contain"
+              />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">African Founders</h1>
-              <p className="text-sm text-gray-600 -mt-1">Notebook</p>
+
+            <div className="leading-none">
+              <h1 className="font-serif text-[19px] font-semibold tracking-[-0.01em] text-[#18251F]">
+                African Founders
+              </h1>
+
+              <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#6D7B73]">
+                Notebook
+              </p>
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+
+          {/* DESKTOP NAVIGATION */}
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8">
+
             <button
               onClick={onNavigateToHome}
-              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+              className="relative py-2 text-[13px] font-medium text-[#59665F]
+                hover:text-[#159447] transition-colors duration-300
+                after:absolute after:left-0 after:bottom-0 after:h-px after:w-0
+                after:bg-[#F2C230] hover:after:w-full
+                after:transition-all after:duration-300"
             >
               Home
             </button>
-            <button 
+
+            <button
               onClick={onNavigateToAbout}
-              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+              className="relative py-2 text-[13px] font-medium text-[#59665F]
+                hover:text-[#159447] transition-colors duration-300
+                after:absolute after:left-0 after:bottom-0 after:h-px after:w-0
+                after:bg-[#F2C230] hover:after:w-full
+                after:transition-all after:duration-300"
             >
               About
             </button>
+
             <button
               onClick={onNavigateToStories}
-              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+              className="relative py-2 text-[13px] font-medium text-[#59665F]
+                hover:text-[#159447] transition-colors duration-300
+                after:absolute after:left-0 after:bottom-0 after:h-px after:w-0
+                after:bg-[#F2C230] hover:after:w-full
+                after:transition-all after:duration-300"
             >
               Stories
             </button>
-            <button 
+
+            <button
               onClick={onNavigateToDataResearch}
-              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+              className="relative py-2 text-[13px] font-medium text-[#59665F]
+                hover:text-[#159447] transition-colors duration-300
+                after:absolute after:left-0 after:bottom-0 after:h-px after:w-0
+                after:bg-[#F2C230] hover:after:w-full
+                after:transition-all after:duration-300"
             >
               Data & Research
             </button>
-            <button 
+
+            <button
               onClick={onNavigateToGetInvolved}
-              className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+              className="relative py-2 text-[13px] font-medium text-[#59665F]
+                hover:text-[#159447] transition-colors duration-300
+                after:absolute after:left-0 after:bottom-0 after:h-px after:w-0
+                after:bg-[#F2C230] hover:after:w-full
+                after:transition-all after:duration-300"
             >
               Get Involved
             </button>
+
+
+            {/* CTA */}
             <button
-              className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium"
               onClick={onNavigateToContact}
+              className="ml-1 bg-[#102019] text-white
+                px-6 py-3 rounded-full
+                text-[13px] font-semibold
+                hover:bg-[#159447]
+                hover:-translate-y-0.5
+                hover:shadow-lg
+                transition-all duration-300"
             >
               Share Your Story
             </button>
+
           </nav>
 
-          {/* Mobile menu button */}
+
+          {/* MOBILE MENU BUTTON */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden flex items-center justify-center
+              w-10 h-10 rounded-full
+              border border-[#D8D3C8]
+              text-[#18251F]
+              hover:bg-white
+              transition-all duration-300"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle navigation menu"
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
+
         </div>
 
-        {/* Mobile Navigation */}
+
+        {/* MOBILE NAVIGATION */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <div className="flex flex-col space-y-4">
+          <div className="md:hidden border-t border-[#DDD8CC] py-5">
+
+            <div className="flex flex-col">
+
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
                   onNavigateToHome?.();
                 }}
-                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+                className="text-left text-[15px] font-medium text-[#59665F]
+                  hover:text-[#159447] py-3 transition-colors"
               >
                 Home
               </button>
-              <button 
+
+              <button
                 onClick={() => {
                   setIsMenuOpen(false);
                   onNavigateToAbout?.();
                 }}
-                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+                className="text-left text-[15px] font-medium text-[#59665F]
+                  hover:text-[#159447] py-3 transition-colors"
               >
                 About
               </button>
+
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
                   onNavigateToStories?.();
                 }}
-                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+                className="text-left text-[15px] font-medium text-[#59665F]
+                  hover:text-[#159447] py-3 transition-colors"
               >
                 Stories
               </button>
+
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
                   onNavigateToDataResearch?.();
                 }}
-                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+                className="text-left text-[15px] font-medium text-[#59665F]
+                  hover:text-[#159447] py-3 transition-colors"
               >
                 Data & Research
               </button>
+
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
                   onNavigateToGetInvolved?.();
                 }}
-                className="text-gray-700 hover:text-orange-600 transition-colors font-medium text-left"
+                className="text-left text-[15px] font-medium text-[#59665F]
+                  hover:text-[#159447] py-3 transition-colors"
               >
                 Get Involved
               </button>
+
               <button
-                className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium w-fit"
                 onClick={() => {
                   setIsMenuOpen(false);
                   onNavigateToContact?.();
                 }}
+                className="mt-3 w-full bg-[#102019] text-white
+                  px-6 py-3.5 rounded-full
+                  text-sm font-semibold
+                  hover:bg-[#159447]
+                  transition-all duration-300"
               >
                 Share Your Story
               </button>
+
             </div>
           </div>
         )}
+
       </div>
     </header>
   );
