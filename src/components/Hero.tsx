@@ -47,7 +47,7 @@ const Hero: React.FC<HeroProps> = ({
       {/* =========================
           TOP NAVIGATION
           ========================= */}
-      <header className="absolute top-0 left-0 right-0 z-50">
+      {/* <header className="absolute top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 pt-6">
           <div className="flex items-center justify-between">
             
@@ -115,7 +115,7 @@ const Hero: React.FC<HeroProps> = ({
             </nav>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* =========================
           HERO
