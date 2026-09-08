@@ -1,6 +1,14 @@
+
 import React, { useState } from 'react';
-import { Search, Filter, MapPin, Calendar, Tag, ArrowLeft } from 'lucide-react';
+import {
+  Search,
+  Filter,
+  MapPin,
+  Tag,
+  ArrowLeft,
+} from 'lucide-react';
 import FeaturedStory from './FeaturedStory';
+import { stories, type FounderStory } from '../data/stories';
 
 interface StoriesPageProps {
   onBack: () => void;
@@ -10,104 +18,227 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedStory, setSelectedStory] = useState<FounderStory | null>(null);
 
-  const allStories = [
-    {
-      title: "Letters To Our Younger Founder Selves",
-      founder: "Constancia (Connie) Mumo",
-      company: "Virtually Assist Outsourcing Ltd",
-      location: "Nairobi, Kenya",
-      date: "Dec 2024",
-      excerpt: "This story began with a simple belief: Africa's brilliance deserves to be seen, celebrated, and hired everywhere. Connie, a second-time founder, writes to her younger self about building a replicable support model that helps founders scale without burning out while creating opportunities for African talent to thrive remotely.",
-      tags: ["SecondTimeFounder", "RemoteWork", "AfricanTalent", "Outsourcing", "GlobalBusiness"]
-    },
-    {
-      title: "Building Beyond Borders",
-      founder: "Amara Okafor",
-      company: "TechBridge Africa",
-      location: "Lagos, Nigeria",
-      date: "Nov 2024",
-      excerpt: "From a small tech hub in Lagos to connecting African developers with global opportunities, Amara's journey shows how local solutions can have worldwide impact. Her platform has placed over 500 African developers in remote positions across 30 countries.",
-      tags: ["TechForGood", "DeveloperCommunity", "GlobalImpact", "RemoteWork"]
-    },
-    {
-      title: "The Pivot That Changed Everything",
-      founder: "Kwame Asante",
-      company: "AgriTech Solutions",
-      location: "Accra, Ghana",
-      date: "Oct 2024",
-      excerpt: "What started as a failed e-commerce venture became Ghana's leading agricultural technology platform. Kwame shares the honest story of failure, learning, and the pivot that now serves over 10,000 smallholder farmers across West Africa.",
-      tags: ["AgriTech", "Pivot", "SmallholderFarmers", "FoodSecurity", "Innovation"]
-    },
-    {
-      title: "From Classroom to Boardroom",
-      founder: "Fatima Al-Rashid",
-      company: "EduTech Innovations",
-      location: "Cairo, Egypt",
-      date: "Oct 2024",
-      excerpt: "A former teacher's journey to revolutionize education across North Africa. Fatima's platform now serves over 50,000 students across 8 countries, proving that the best solutions often come from those who understand the problem firsthand.",
-      tags: ["EdTech", "Education", "Teacher", "Innovation", "NorthAfrica"]
-    },
-    {
-      title: "Healing Through Innovation",
-      founder: "Dr. Thandiwe Mthembu",
-      company: "HealthConnect SA",
-      location: "Cape Town, South Africa",
-      date: "Sep 2024",
-      excerpt: "A medical doctor's mission to bridge the healthcare gap in rural communities. Through telemedicine and mobile clinics, Dr. Mthembu has brought quality healthcare to over 100,000 people in underserved areas.",
-      tags: ["HealthTech", "Telemedicine", "RuralHealth", "SocialImpact", "Doctor"]
-    },
-    {
-      title: "The Art of Sustainable Fashion",
-      founder: "Kemi Adebayo",
-      company: "Afro Threads",
-      location: "Ibadan, Nigeria",
-      date: "Sep 2024",
-      excerpt: "Transforming waste into wearable art while preserving African textile traditions. Kemi's sustainable fashion brand employs over 200 artisans and has prevented thousands of tons of textile waste from entering landfills.",
-      tags: ["SustainableFashion", "Artisans", "Sustainability", "TextileWaste", "Culture"]
-    },
-    {
-      title: "Fintech for the Unbanked",
-      founder: "Samuel Kiprotich",
-      company: "MobiPay Kenya",
-      location: "Eldoret, Kenya",
-      date: "Aug 2024",
-      excerpt: "Building financial inclusion one transaction at a time. Samuel's mobile payment solution has brought banking services to over 500,000 previously unbanked individuals across rural Kenya, proving that innovation thrives everywhere.",
-      tags: ["Fintech", "FinancialInclusion", "MobilePayments", "Unbanked", "RuralDevelopment"]
-    },
-    {
-      title: "Powering Communities with Solar",
-      founder: "Aisha Traore",
-      company: "SolarVillage Mali",
-      location: "Bamako, Mali",
-      date: "Aug 2024",
-      excerpt: "From engineering student to energy entrepreneur. Aisha's solar micro-grid solutions have brought electricity to 50+ rural villages, transforming lives and creating new economic opportunities in previously off-grid communities.",
-      tags: ["CleanEnergy", "Solar", "RuralElectrification", "SustainableDevelopment", "Engineering"]
-    }
-  ];
+  const allTags = Array.from(
+    new Set(stories.flatMap((story) => story.tags))
+  );
 
-  const allTags = Array.from(new Set(allStories.flatMap(story => story.tags)));
-  const allLocations = Array.from(new Set(allStories.map(story => story.location)));
+  const allLocations = Array.from(
+    new Set(stories.map((story) => story.location))
+  );
 
-  const filteredStories = allStories.filter(story => {
-    const matchesSearch = searchTerm === '' ||
-      story.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      story.founder.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      story.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      story.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredStories = stories.filter((story) => {
+    const search = searchTerm.toLowerCase().trim();
 
-    const matchesTag = selectedTag === '' || story.tags.includes(selectedTag);
-    const matchesLocation = selectedLocation === '' || story.location === selectedLocation;
+    const matchesSearch =
+      search === '' ||
+      story.title.toLowerCase().includes(search) ||
+      story.founder.toLowerCase().includes(search) ||
+      story.company.toLowerCase().includes(search) ||
+      story.location.toLowerCase().includes(search) ||
+      story.excerpt.toLowerCase().includes(search) ||
+      story.tags.some((tag) => tag.toLowerCase().includes(search));
+
+    const matchesTag =
+      selectedTag === '' || story.tags.includes(selectedTag);
+
+    const matchesLocation =
+      selectedLocation === '' || story.location === selectedLocation;
 
     return matchesSearch && matchesTag && matchesLocation;
   });
 
+  const handleReadStory = (story: FounderStory) => {
+    setSelectedStory(story);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto',
+    });
+  };
+
+  const handleBackToStories = () => {
+    setSelectedStory(null);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto',
+    });
+  };
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSelectedTag('');
+    setSelectedLocation('');
+  };
+
+  /* 
+     FULL STORY VIEW
+     */
+  if (selectedStory) {
+    return (
+      <div className="min-h-screen bg-[#F7F5EF] text-[#18251F]">
+
+        {/* HEADER */}
+        <header className="bg-[#F7F5EF]/95 backdrop-blur-md border-b border-[#DDD8CC] sticky top-0 z-40">
+          <div className="max-w-5xl mx-auto px-5 sm:px-8 py-5">
+
+            <button
+              onClick={handleBackToStories}
+              className="group flex items-center gap-3 text-[#59665F] hover:text-[#159447] transition-all duration-300"
+            >
+              <span className="w-9 h-9 flex items-center justify-center border border-[#D5D0C4] group-hover:border-[#159447] group-hover:bg-[#EEF3EF] transition-all duration-300">
+                <ArrowLeft className="h-4 w-4" />
+              </span>
+
+              <span className="text-[11px] uppercase tracking-[0.18em] font-medium">
+                Back to Stories
+              </span>
+            </button>
+
+          </div>
+        </header>
+
+        {/* STORY CONTENT */}
+        <main className="py-14 sm:py-20">
+          <article className="max-w-4xl mx-auto px-5 sm:px-8">
+
+            {/* CATEGORY */}
+            <div className="flex items-center gap-3 mb-7">
+              <span className="w-10 h-px bg-[#F2C230]" />
+
+              <span className="text-[10px] uppercase tracking-[0.22em] text-[#159447] font-medium">
+                Founder Story
+              </span>
+            </div>
+
+            {/* TITLE */}
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#102019] leading-[1.05] tracking-[-0.025em]">
+              {selectedStory.title}
+            </h1>
+
+            {/* FOUNDER DETAILS */}
+            <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 text-sm">
+
+              <div>
+                <p className="font-semibold text-[#102019]">
+                  {selectedStory.founder}
+                </p>
+
+                <p className="text-[#7A827C] mt-1">
+                  {selectedStory.role}
+                </p>
+              </div>
+
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-[#B8B3A8]" />
+
+              <p className="text-[#59665F]">
+                {selectedStory.company}
+              </p>
+
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-[#B8B3A8]" />
+
+              <div className="flex items-center gap-2 text-[#59665F]">
+                <MapPin className="h-4 w-4 text-[#159447]" />
+                <span>{selectedStory.location}</span>
+              </div>
+
+            </div>
+
+            {/* EXCERPT */}
+            <div className="mt-10 border-l-2 border-[#F2C230] pl-6">
+              <p className="text-lg sm:text-xl text-[#59665F] leading-relaxed">
+                {selectedStory.excerpt}
+              </p>
+            </div>
+
+            {/* ACTUAL STORY */}
+            <div className="mt-12 space-y-7">
+
+              {selectedStory.content.map((paragraph, index) => (
+                <p
+                  key={`${selectedStory.id}-paragraph-${index}`}
+                  className={`
+                    text-[#4F5D56]
+                    text-base
+                    sm:text-lg
+                    leading-[1.9]
+                    ${
+                      index === 0
+                        ? 'first-letter:text-5xl first-letter:font-serif first-letter:text-[#159447] first-letter:float-left first-letter:mr-2 first-letter:mt-1'
+                        : ''
+                    }
+                  `}
+                >
+                  {paragraph}
+                </p>
+              ))}
+
+            </div>
+
+            {/* THEMES */}
+            <div className="mt-12 pt-8 border-t border-[#D5D0C4]">
+
+              <div className="flex items-center gap-3 mb-4">
+                <Tag className="h-4 w-4 text-[#159447]" />
+
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#7A827C] font-medium">
+                  Themes
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+
+                {selectedStory.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1.5 rounded-full bg-[#EAE5DA] text-[#59665F] text-xs"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+
+              </div>
+
+            </div>
+
+            {/* BACK BUTTON */}
+            <div className="mt-14">
+
+              <button
+                onClick={handleBackToStories}
+                className="group inline-flex items-center gap-3 text-[#159447] hover:text-[#102019] font-semibold text-sm transition-colors duration-300"
+              >
+                <ArrowLeft
+                  className="h-4 w-4 group-hover:-translate-x-1 transition-transform duration-300"
+                />
+
+                <span>
+                  Back to All Stories
+                </span>
+              </button>
+
+            </div>
+
+          </article>
+        </main>
+
+      </div>
+    );
+  }
+
+  /* =====================================================
+     STORIES ARCHIVE
+     ===================================================== */
   return (
     <div className="min-h-screen bg-[#F7F5EF] text-[#18251F]">
 
       {/* HEADER */}
       <header className="bg-[#F7F5EF]/95 backdrop-blur-md border-b border-[#DDD8CC] sticky top-0 z-40">
+
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 py-5">
+
           <div className="flex items-center justify-between">
 
             <button
@@ -124,6 +255,7 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
             </button>
 
             <div className="text-center">
+
               <p className="text-[10px] uppercase tracking-[0.28em] text-[#159447] mb-1">
                 African Founders Notebook
               </p>
@@ -135,11 +267,15 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
               <p className="text-[#7A827C] text-xs mt-1">
                 {filteredStories.length} stories documented
               </p>
+
             </div>
 
             <div className="w-9 sm:w-28" />
+
           </div>
+
         </div>
+
       </header>
 
       {/* MAIN */}
@@ -151,11 +287,13 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
           <div className="max-w-3xl mb-12">
 
             <div className="flex items-center gap-3 mb-5">
+
               <span className="w-10 h-px bg-[#F2C230]" />
 
               <span className="text-[11px] uppercase tracking-[0.22em] text-[#159447] font-medium">
                 The Archive
               </span>
+
             </div>
 
             <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-[#102019] leading-[1.05] tracking-[-0.025em]">
@@ -223,11 +361,12 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
                 >
                   <option value="">All Tags</option>
 
-                  {allTags.map(tag => (
+                  {allTags.map((tag) => (
                     <option key={tag} value={tag}>
                       {tag}
                     </option>
                   ))}
+
                 </select>
 
               </div>
@@ -244,22 +383,19 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
                 >
                   <option value="">All Locations</option>
 
-                  {allLocations.map(location => (
+                  {allLocations.map((location) => (
                     <option key={location} value={location}>
                       {location}
                     </option>
                   ))}
+
                 </select>
 
               </div>
 
               {/* CLEAR */}
               <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedTag('');
-                  setSelectedLocation('');
-                }}
+                onClick={clearFilters}
                 className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[#102019] text-white text-sm font-medium hover:bg-[#159447] transition-all duration-300"
               >
                 <Filter className="h-4 w-4" />
@@ -267,11 +403,12 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
               </button>
 
             </div>
+
           </div>
 
         </div>
 
-        {/* STORY ARCHIVE */}
+        {/* STORIES */}
         {filteredStories.length > 0 ? (
           <section className="overflow-hidden">
 
@@ -280,90 +417,101 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
               <div className="flex items-end justify-between border-b border-[#D5D0C4] pb-4 mb-8">
 
                 <div>
+
                   <div className="flex items-center gap-3 mb-2">
+
                     <span className="w-8 h-px bg-[#F2C230]" />
 
                     <span className="text-[10px] uppercase tracking-[0.2em] text-[#159447] font-medium">
                       The Collection
                     </span>
+
                   </div>
 
                   <h3 className="font-serif text-3xl sm:text-4xl text-[#102019]">
                     Founder Stories
                   </h3>
+
                 </div>
 
                 <div className="hidden sm:flex items-center gap-3 text-[#7A827C]">
+
                   <span className="text-[10px] uppercase tracking-[0.18em]">
                     Scroll to explore
                   </span>
 
                   <span className="w-10 h-px bg-[#D5D0C4]" />
+
                 </div>
 
               </div>
 
             </div>
 
-            {/* MOVING STORY TRACK */}
+            {/* LOOP */}
             <div className="relative">
 
-              {/* Fade edges */}
-              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#F7F5EF] to-transparent z-20" />
+              {/* LEFT FADE */}
+              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-10 sm:w-24 bg-gradient-to-r from-[#F7F5EF] to-transparent z-20" />
 
-              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-[#F7F5EF] to-transparent z-20" />
+              {/* RIGHT FADE */}
+              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 sm:w-24 bg-gradient-to-l from-[#F7F5EF] to-transparent z-20" />
 
-              <div
-                className="flex gap-6 w-max px-5 sm:px-8 lg:px-10 animate-[stories-scroll_55s_linear_infinite] hover:[animation-play-state:paused]"
-              >
+              <div className="overflow-hidden">
 
-                {/* First set */}
-                {filteredStories.map((story, index) => (
-                  <div
-                    key={`first-${index}`}
-                    className="w-[320px] sm:w-[360px] lg:w-[390px] flex-shrink-0"
-                  >
-                    <FeaturedStory {...story} />
+                <div className="stories-track flex w-max">
+
+                  {/* FIRST SET */}
+                  <div className="flex gap-6 px-3 sm:px-4">
+
+                    {filteredStories.map((story) => (
+                      <div
+                        key={`first-${story.id}`}
+                        className="w-[320px] sm:w-[360px] lg:w-[390px] shrink-0"
+                      >
+                        <FeaturedStory
+                          title={story.title}
+                          founder={story.founder}
+                          company={story.company}
+                          location={story.location}
+                          excerpt={story.excerpt}
+                          tags={story.tags}
+                          onReadStory={() => handleReadStory(story)}
+                        />
+                      </div>
+                    ))}
+
                   </div>
-                ))}
 
-                {/* Duplicate set for seamless loop */}
-                {filteredStories.map((story, index) => (
-                  <div
-                    key={`second-${index}`}
-                    className="w-[320px] sm:w-[360px] lg:w-[390px] flex-shrink-0"
-                    aria-hidden="true"
-                  >
-                    <FeaturedStory {...story} />
+                  {/* SECOND SET FOR SEAMLESS LOOP */}
+                  <div className="flex gap-6 px-3 sm:px-4">
+
+                    {filteredStories.map((story) => (
+                      <div
+                        key={`second-${story.id}`}
+                        className="w-[320px] sm:w-[360px] lg:w-[390px] shrink-0"
+                      >
+                        <FeaturedStory
+                          title={story.title}
+                          founder={story.founder}
+                          company={story.company}
+                          location={story.location}
+                          excerpt={story.excerpt}
+                          tags={story.tags}
+                          onReadStory={() => handleReadStory(story)}
+                        />
+                      </div>
+                    ))}
+
                   </div>
-                ))}
 
-              </div>
-
-            </div>
-
-            {/* LOOP INDICATOR */}
-            <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 mt-8">
-
-              <div className="flex items-center justify-center gap-4">
-
-                <span className="w-12 h-px bg-[#D5D0C4]" />
-
-                <div className="flex items-center gap-2 text-[#8A918C]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#159447]" />
-                  <span className="text-[10px] uppercase tracking-[0.2em]">
-                    Stories in motion
-                  </span>
                 </div>
-
-                <span className="w-12 h-px bg-[#D5D0C4]" />
 
               </div>
 
             </div>
 
           </section>
-
         ) : (
 
           /* NO RESULTS */
@@ -386,11 +534,7 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
                 </p>
 
                 <button
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedTag('');
-                    setSelectedLocation('');
-                  }}
+                  onClick={clearFilters}
                   className="bg-[#102019] text-white px-7 py-3.5 hover:bg-[#159447] transition-all duration-300 text-sm font-medium"
                 >
                   Show All Stories
@@ -408,7 +552,6 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
 
           <div className="mt-20 relative overflow-hidden bg-[#102019] px-7 py-12 sm:px-12 sm:py-14">
 
-            {/* Decorative circles */}
             <div className="absolute -right-24 -top-24 w-72 h-72 rounded-full border border-white/[0.07]" />
 
             <div className="absolute right-8 -top-10 w-40 h-40 rounded-full border border-[#F2C230]/15" />
@@ -434,9 +577,8 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
               </h3>
 
               <p className="text-white/65 mb-8 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-                Join thousands of founders, investors, and ecosystem builders
-                who receive our weekly newsletter with the latest stories,
-                insights, and opportunities from across Africa.
+                Join founders, investors, and ecosystem builders who receive
+                our latest stories, insights, and opportunities from across Africa.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
@@ -447,7 +589,10 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
                   className="flex-1 px-5 py-3.5 bg-white/10 border border-white/20 text-white placeholder:text-white/45 focus:outline-none focus:border-[#F2C230] transition-all duration-300 text-sm"
                 />
 
-                <button className="bg-[#F2C230] text-[#102019] px-7 py-3.5 font-semibold text-sm hover:bg-[#E7B719] transition-all duration-300">
+                <button
+                  type="button"
+                  className="bg-[#F2C230] text-[#102019] px-7 py-3.5 font-semibold text-sm hover:bg-[#E7B719] transition-all duration-300"
+                >
                   Subscribe
                 </button>
 
@@ -455,7 +600,6 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
 
             </div>
 
-            {/* Brand stripe */}
             <div className="absolute bottom-0 left-0 right-0 h-[3px] flex">
               <div className="w-1/3 bg-[#1677C8]" />
               <div className="w-1/3 bg-[#159447]" />
@@ -468,33 +612,36 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
 
       </main>
 
-      {/* CSS FOR THE LOOP */}
+      {/* LOOP ANIMATION */}
       <style>{`
-        @keyframes stories-scroll {
+        .stories-track {
+          animation: stories-loop 110s linear infinite;
+          will-change: transform;
+        }
+
+        .stories-track:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes stories-loop {
           from {
             transform: translateX(0);
           }
 
           to {
-            transform: translateX(calc(-50% - 12px));
+            transform: translateX(-50%);
           }
         }
 
         @media (max-width: 640px) {
-          @keyframes stories-scroll {
-            from {
-              transform: translateX(0);
-            }
-
-            to {
-              transform: translateX(calc(-50% - 12px));
-            }
+          .stories-track {
+            animation-duration: 90s;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .animate-\\[stories-scroll_55s_linear_infinite\\] {
-            animation-play-state: paused !important;
+          .stories-track {
+            animation: none;
           }
         }
       `}</style>
@@ -504,3 +651,4 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
 };
 
 export default StoriesPage;
+
