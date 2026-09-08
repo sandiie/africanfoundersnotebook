@@ -171,8 +171,7 @@ const Hero: React.FC<HeroProps> = ({
                 />
               </span>
             </h1>
-
-            <p className="text-lg sm:text-xl md:text-2xl text-white/72 mt-9 mb-12 max-w-3xl leading-relaxed font-light tracking-wide">
+<p className="text-lg sm:text-xl md:text-2xl text-white/65 mt-9 mb-12 max-w-3xl leading-relaxed font-normal tracking-wide">
               A research and storytelling initiative combining anonymized,
               multi-country data and founder narratives to address critical
               evidence gaps in African social entrepreneurship.
