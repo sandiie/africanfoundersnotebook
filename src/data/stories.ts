@@ -1,3 +1,20 @@
+import traceyShiundu from "../assets/stories/Tracey.png";
+import laissaMalih from "../assets/stories/Laissa Malih.png";
+import staceyNyangi from "../assets/stories/Stacey Nyangi.jpg";
+import kevinIrungu from "../assets/stories/Kevin Irungu.png";
+import collinsOtieno from "../assets/stories/Collins Otieno.jpg";
+import joyceMurairi from "../assets/stories/Joyce Murairi.png";
+import eliudLuutsa from "../assets/stories/Eliud Luutsa.jpg";
+import connieMumo from "../assets/stories/Connie Mumo.png";
+import afomiaAndualem from "../assets/stories/Afomia Andualem.jpg";
+import anthonyMuthungu from "../assets/stories/Anthony Muthungu.jpg";
+import shaniceKativi from "../assets/stories/Shanice Kativi .jpg";
+import muthoniNgocho from "../assets/stories/Muthoni Ngocho.jpg";
+import samuelBinja from "../assets/stories/Samuel Binja.png";
+import drMayian from "../assets/stories/Dr. Mayian.png";
+import nigistGebremedhen from "../assets/stories/Nigist Gebremedhen.png";
+import emmanuelSsekitto from "../assets/stories/Emmanuel Ssekitto.jpg";
+
 export interface FounderStory {
   id: string;
   title: string;
@@ -7,6 +24,7 @@ export interface FounderStory {
   location: string;
   excerpt: string;
   tags: string[];
+  imageUrl?: string;
   bio?: string;
   content: string[];
 }
@@ -25,6 +43,7 @@ export const stories: FounderStory[] = [
       "Children",
       "Entrepreneurship"
     ],
+    "imageUrl": traceyShiundu,
     "excerpt": "To the young woman staring at her laptop at midnight, wondering if anyone will ever take her seriously. This letter is for you.",
     "content": [
       "Theme: The Power of Starting Small, Staying Human, and Holding the Vision",
@@ -59,6 +78,7 @@ export const stories: FounderStory[] = [
       "ClimateJustice",
       "Community"
     ],
+    "imageUrl": laissaMalih,
     "excerpt": "The 15th May 2015. That’s the date my heart took a deep breath and stepped into a path I didn’t fully understand, but one I deeply believed in. I founded Nomad Footprints Films with nothing but a borrowed camera, a head full of stories, and a fire in my belly. I didn’t have a blu",
     "content": [
       "To my fellow Founders",
@@ -97,6 +117,7 @@ export const stories: FounderStory[] = [
       "Purpose",
       "Resilience"
     ],
+   "imageUrl": staceyNyangi,
     "excerpt": "I know you. You're full of fire and ideas, your head constantly buzzing with what-ifs, to-do lists, and “surely I can figure this out” moments. You’re obsessing over drinkware tabs, scouring Pinterest for inspiration, and second-guessing yourself every other hour. You have no ide",
     "content": [
       "Dear Younger Me,",
@@ -148,6 +169,7 @@ export const stories: FounderStory[] = [
       "Education",
       "Technology"
     ],
+    "imageUrl": kevinIrungu,
     "excerpt": "I’m Kevin Irungu, co-founder of ChipuRobo, and if you’re the young builder I was—burning the midnight oil watching tutorial after tutorial on how to bring hardware and code together, yet nothing is working—then this letter is for you.",
     "content": [
       "To the 21-Year-Old Dreaming in Zeros and Ones,",
@@ -182,6 +204,7 @@ export const stories: FounderStory[] = [
       "Youth",
       "SocialImpact"
     ],
+    "imageUrl": collinsOtieno,
     "excerpt": "I am Collins Otieno, the Founder of Mukuru Shujaa. I want to share about the power of collective leadership rooted in proximate communities. I had just started a sports development project within Mukuru kwa Njenga in 2021 when I realized how difficult it would be to sustain the p",
     "content": [
       "Letter to a Young Founder",
@@ -211,6 +234,7 @@ export const stories: FounderStory[] = [
       "Entrepreneurship",
       "Youth"
     ],
+    "imageUrl": joyceMurairi,
     "excerpt": "I see you full of ideas, quietly dreaming about starting something meaningful. You love fashion. You’re always imagining outfits, playing with fabrics, sketching between schoolwork. But I also know the questions in your heart. You’re wondering if this can ever be more than a drea",
     "content": [
       "Dear younger Joyce,",
@@ -251,6 +275,7 @@ export const stories: FounderStory[] = [
       "Iteration",
       "AI"
     ],
+    "imageUrl": eliudLuutsa,
     "excerpt": "I am Eliud Luutsa, founder of Innobid. I want to share what I learned about the power of Empathy and Continuous Iteration, Learning and Improvement.",
     "content": [
       "To the aspiring founder reading this,",
@@ -301,6 +326,7 @@ export const stories: FounderStory[] = [
       "Leadership",
       "Resilience"
     ],
+    "imageUrl": connieMumo,
     "excerpt": "Playing small will never serve you. You were always meant to stretch. To expand. And guess what? Entrepreneurship is the thing that’s going to do it. Not because it’s easy. But because it’s going to unravel you and make room in you for more life.",
     "content": [
       "Dear Younger founder me,",
@@ -334,6 +360,7 @@ export const stories: FounderStory[] = [
       "WomenFounders",
       "Innovation"
     ],
+    "imageUrl": afomiaAndualem,
     "excerpt": "I’m writing from a future you once dreamed of—but often doubted. I know how you carry bold ideas in a world that sometimes tells you they’re “too much” or “too little.” You’re standing on the edge of something uncertain and extraordinary. It feels overwhelming. But hear me: it’s ",
     "content": [
       "Dear Younger Me,",
@@ -370,6 +397,7 @@ export const stories: FounderStory[] = [
       "Product",
       "Mentorship"
     ],
+    "imageUrl": anthonyMuthungu,
     "excerpt": "I know your passion for technology runs deep and always will. But I want to remind you of something important about linking your love for tech with business. Think about how you can turn that passion into impact and income. How can you solve real world problems with the technolog",
     "content": [
       "Dear Anthony,",
@@ -415,6 +443,7 @@ export const stories: FounderStory[] = [
       "Resilience",
       "Purpose"
     ],
+    "imageUrl": shaniceKativi,
     "excerpt": "This is Shanice Kativi, founder of Through My Eyes Organization, and I have a special letter to 26-year-old Shanice, fondly known as Shan.",
     "content": [
       "Dear Younger Me,",
@@ -447,6 +476,7 @@ export const stories: FounderStory[] = [
       "Media",
       "Identity"
     ],
+    "imageUrl": muthoniNgocho,
     "excerpt": "To the aspiring founder reading this, I’m Muthoni Ngocho, founder of SoniPlusAI. My venture is about using artificial intelligence to honor culture, tell history, and create cinematic stories that help us see ourselves at the center. In this letter, I want to share what I’ve lear",
     "content": [
       "Dear Younger Me,",
@@ -477,6 +507,7 @@ export const stories: FounderStory[] = [
       "Persistence",
       "SocialImpact"
     ],
+    "imageUrl": samuelBinja,
     "excerpt": "My name is Samuel Binja, Founder of the Kalobeyei Initiative for Better Life (KI4BLI) and Light Academy, the first refugee-led, KICD-accredited school in Kenya. I want to share a moment from my journey that taught me the power of persistence and community when the odds seemed imp",
     "content": [
       "Dear Aspiring Founder,",
@@ -510,6 +541,7 @@ export const stories: FounderStory[] = [
       "Leadership",
       "Purpose"
     ],
+    "imageUrl": drMayian,
     "excerpt": "I’m writing this to you from a place in the future you can’t quite imagine yet—a future where you’ve spent years learning, listening, and serving. I see you there, poring over books, probably feeling a mix of fierce determination and crippling self-doubt. You’re wondering if you’",
     "content": [
       "My Dearest Younger Self,",
@@ -540,6 +572,7 @@ export const stories: FounderStory[] = [
       "Accessibility",
       "Engineering"
     ],
+    "imageUrl": nigistGebremedhen,
     "excerpt": "My name is Nigist Gebremedhen, founder of the Bamboo Prosthetic Leg Project, an aspiring architect, and an advocate for inclusive innovation, sustainability, and bio-design. If you are just beginning your entrepreneurial journey, or if I could go back and speak to myself at the v",
     "content": [
       "Letter to My Younger Self – and Every Aspiring African Entrepreneur",
@@ -583,6 +616,7 @@ export const stories: FounderStory[] = [
       "Leadership",
       "SocialImpact"
     ],
+    "imageUrl": emmanuelSsekitto,
     "excerpt": "It’s me, you, but many years older, and a little wiser. I’m writing this letter as both a reminder and a celebration: of the fire that pushed you to start, the lessons you learned the hard way, and the growth you never imagined when you first picked up a brush and turned your per",
     "content": [
       "Letter to My Younger Founder Self",

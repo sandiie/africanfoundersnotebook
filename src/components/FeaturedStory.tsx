@@ -32,7 +32,7 @@ const FeaturedStory: React.FC<FeaturedStoryProps> = ({
     <article
       className="
         group
-        h-[500px]
+        min-h-[500px]
         flex
         flex-col
         bg-[#F7F5EF]
@@ -55,7 +55,7 @@ const FeaturedStory: React.FC<FeaturedStoryProps> = ({
             className="
               w-full
               h-full
-              object-cover
+              object-contain
               group-hover:scale-105
               transition-transform
               duration-700
