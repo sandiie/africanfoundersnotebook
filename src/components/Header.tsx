@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import MainLogo from '../assets/Main logo.jpeg';
@@ -119,10 +120,10 @@ const Header: React.FC<HeaderProps> = ({
             {/* CTA */}
             <button
               onClick={onNavigateToContact}
-              className="ml-1 bg-[#102019] text-white
+              className="ml-1 bg-[#159447] text-white
                 px-6 py-3 rounded-full
                 text-[13px] font-semibold
-                hover:bg-[#159447]
+                hover:bg-[#102019]
                 hover:-translate-y-0.5
                 hover:shadow-lg
                 transition-all duration-300"
@@ -220,10 +221,10 @@ const Header: React.FC<HeaderProps> = ({
                   setIsMenuOpen(false);
                   onNavigateToContact?.();
                 }}
-                className="mt-3 w-full bg-[#102019] text-white
+                className="mt-3 w-full bg-[#159447] text-white
                   px-6 py-3.5 rounded-full
                   text-sm font-semibold
-                  hover:bg-[#159447]
+                  hover:bg-[#102019]
                   transition-all duration-300"
               >
                 Share Your Story
@@ -239,3 +240,4 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
+

@@ -2,18 +2,19 @@ import traceyShiundu from "../assets/stories/Tracey.png";
 import laissaMalih from "../assets/stories/Laissa Malih.png";
 import staceyNyangi from "../assets/stories/Stacey Nyangi.jpg";
 import kevinIrungu from "../assets/stories/Kevin Irungu.png";
-import collinsOtieno from "../assets/stories/Collins Otieno.jpg";
+import collinsOtieno from "../assets/stories/Collins Otieno.png";
 import joyceMurairi from "../assets/stories/Joyce Murairi.png";
-import eliudLuutsa from "../assets/stories/Eliud Luutsa.jpg";
+import eliudLuutsa from "../assets/stories/Eliud Luutsa.png";
 import connieMumo from "../assets/stories/Connie Mumo.png";
-import afomiaAndualem from "../assets/stories/Afomia Andualem.jpg";
-import anthonyMuthungu from "../assets/stories/Anthony Muthungu.jpg";
-import shaniceKativi from "../assets/stories/Shanice Kativi .jpg";
-import muthoniNgocho from "../assets/stories/Muthoni Ngocho.jpg";
+import afomiaAndualem from "../assets/stories/Afomia Andualem.png";
+import anthonyMuthungu from "../assets/stories/Anthony Muthungu.png";
+import shaniceKativi from "../assets/stories/Shanice Kativi.png";
+import muthoniNgocho from "../assets/stories/Muthoni Ngocho.png";
 import samuelBinja from "../assets/stories/Samuel Binja.png";
 import drMayian from "../assets/stories/Dr. Mayian.png";
 import nigistGebremedhen from "../assets/stories/Nigist Gebremedhen.png";
-import emmanuelSsekitto from "../assets/stories/Emmanuel Ssekitto.jpg";
+import emmanuelSsekitto from "../assets/stories/Emmanuel Ssekitto.png";
+import Jacob from "../assets/stories/Jacob.png";
 
 export interface FounderStory {
   id: string;
@@ -655,6 +656,7 @@ export const stories: FounderStory[] = [
       "Innovation",
       "Entrepreneurship"
     ],
+     "imageUrl": Jacob,
     "excerpt": "To every young African entrepreneur just starting out, I want to share a story. It’s not polished, and it doesn’t start with millions of dollars or perfect plans. It starts with me, a mechanical engineering student at the Federal University of Technology Akure (FUTA), reluctantly",
     "content": [
       "Dear Young African Founder: My Journey Building Coconoto",

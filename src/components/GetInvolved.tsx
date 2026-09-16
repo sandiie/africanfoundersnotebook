@@ -1,23 +1,21 @@
-
 import React, { useState } from 'react';
-import { 
-  ArrowLeft, 
-  Mail, 
-  Phone, 
-  Users, 
-  Target,  
-  CheckCircle, 
-  ArrowRight, 
-  Send, 
-  Clock, 
-  User, 
-  Building2, 
-  Briefcase, 
+import {
+  ArrowLeft,
+  Mail,
+  Phone,
+  Users,
+  Target,
+  CheckCircle,
+  ArrowRight,
+  Send,
+  Clock,
+  User,
+  Building2,
+  Briefcase,
   MessageSquare,
   PenTool,
   Share2,
-  Sparkles,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 
 interface GetInvolvedProps {
@@ -25,7 +23,10 @@ interface GetInvolvedProps {
   onNavigateToContact?: () => void;
 }
 
-const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }) => {
+const GetInvolved: React.FC<GetInvolvedProps> = ({
+  onBack,
+  onNavigateToContact
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,440 +38,494 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    
-    const subject = `Get Involved - ${formData.interest}`;
-    const body = `Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\nRole: ${formData.role}\nInterest: ${formData.interest}\n\nMessage:\n${formData.message}`;
-    window.location.href = `mailto:susanmaina84@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        organization: '',
-        role: '',
-        interest: '',
-        message: ''
-      });
-    }, 3000);
+
+    try {
+      const response = await fetch(
+        'https://api.web3forms.com/submit',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: 'YOUR_ACCESS_KEY',
+            subject: `Get Involved - ${formData.interest}`,
+            from_name: formData.name,
+            name: formData.name,
+            email: formData.email,
+            organization: formData.organization,
+            role: formData.role,
+            interest: formData.interest,
+            message: formData.message
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+
+        setFormData({
+          name: '',
+          email: '',
+          organization: '',
+          role: '',
+          interest: '',
+          message: ''
+        });
+
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
+      } else {
+        alert(
+          data.message ||
+            'Something went wrong. Please try again.'
+        );
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+
+      alert(
+        'Unable to send your message. Please try again later.'
+      );
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const waysToGetInvolved = [
-    {
-      icon: PenTool,
-      title: "Share Your Story",
-      description: "Contribute your founder journey to our research. Your experiences help shape the narrative of African entrepreneurship.",
-      action: "Share Your Story",
-      color: "from-[#1677C8] to-[#159447]",
-      gradient: "from-[#F7F5EF] to-white",
-      iconBg: "bg-[#1677C8]",
-      type: "contact"
-    },
-    {
-      icon: Target,
-      title: "Partner With Us",
-      description: "Collaborate on research projects, events, or content. Let's work together to amplify African founder voices.",
-      action: "Partner Now",
-      color: "from-[#159447] to-[#102019]",
-      gradient: "from-[#F7F5EF] to-white",
-      iconBg: "bg-[#159447]",
-      type: "form"
-    },
-    {
-      icon: Users,
-      title: "Join Our Community",
-      description: "Connect with fellow founders, researchers, and ecosystem builders across Africa. Join our growing network.",
-      action: "Join Community",
-      color: "from-[#102019] to-[#1677C8]",
-      gradient: "from-[#F7F5EF] to-white",
-      iconBg: "bg-[#102019]",
-      type: "external"
-    },
-    {
-      icon: Share2,
-      title: "Spread the Word",
-      description: "Help us reach more founders across Africa by sharing our work within your networks.",
-      action: "Share Now",
-      color: "from-[#F2C230] to-[#159447]",
-      gradient: "from-[#F7F5EF] to-white",
-      iconBg: "bg-[#159447]",
-      type: "share"
-    }
-  ];
-
   const contactDetails = {
-    phone: "0741201421",
-    email: "susanmaina84@gmail.com",
-    available: "Mon-Fri, 9am-5pm EAT"
+    phone: '0741201421',
+    email: 'susanmaina84@gmail.com',
+    available: 'Mon-Fri, 9am-5pm EAT'
   };
 
-  const scrollToForm = () => {
-    const formElement = document.getElementById('contact-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-
-  const handleActionClick = (type: string, action: string) => {
-    switch(type) {
-      case 'contact':
-        if (onNavigateToContact) {
-          onNavigateToContact();
-        } else {
-          scrollToForm();
-        }
-        break;
-      case 'form':
-        scrollToForm();
-        break;
-      case 'external':
-        window.open('https://forms.gle/your-community-form', '_blank');
-        break;
-      case 'share':
-        if (navigator.share) {
-          navigator.share({
-            title: 'African Founders Notebook',
-            text: 'Discover the African Founders Notebook - documenting African social enterprise through data, stories, and insights.',
-            url: window.location.href,
-          }).catch(() => {});
-        } else {
-          navigator.clipboard.writeText(window.location.href).then(() => {
-            alert('Link copied to clipboard! Share it with your network.');
-          }).catch(() => {
-            prompt('Copy this link to share:', window.location.href);
-          });
-        }
-        break;
-      default:
-        scrollToForm();
-    }
-  };
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    contactDetails.email
+  )}`;
 
   return (
     <div className="min-h-screen bg-[#F7F5EF] text-[#18251F]">
 
       {/* Header */}
-      <div className="relative">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pt-6 sm:pt-8">
-          <button 
-            onClick={onBack}
-            className="group inline-flex items-center gap-2 text-sm font-medium text-[#5F6B65] hover:text-[#159447] transition-colors duration-300"
-          >
-            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
-          </button>
-        </div>
+      <header className="sticky top-0 z-50 bg-[#102019]/95 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
 
-        {/* Hero */}
-        <div className="pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 px-6">
-          <div className="max-w-4xl mx-auto text-center">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-3 text-white hover:text-[#F2C230] transition-colors duration-300"
+            >
+              <ArrowLeft size={20} />
+              <span className="font-medium">
+                Back to Home
+              </span>
+            </button>
 
-            <div className="flex justify-center mb-7">
-              <span className="w-12 h-[3px] bg-[#1677C8]"></span>
-              <span className="w-12 h-[3px] bg-[#159447]"></span>
-              <span className="w-12 h-[3px] bg-[#F2C230]"></span>
+            <div className="hidden sm:flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-[#1677C8]" />
+              <div className="w-2 h-2 rounded-full bg-[#159447]" />
+              <div className="w-2 h-2 rounded-full bg-[#F2C230]" />
             </div>
 
-            <div className="inline-flex items-center gap-2 mb-5">
-              <Sparkles className="h-4 w-4 text-[#159447]" />
-              <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#159447]">
-                Join Our Community
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[#102019] text-white">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-72 h-72 rounded-full bg-[#159447] blur-3xl" />
+          <div className="absolute bottom-0 left-10 w-72 h-72 rounded-full bg-[#1677C8] blur-3xl" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
+          <div className="max-w-4xl">
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 mb-8">
+              <Users size={16} className="text-[#F2C230]" />
+              <span className="text-sm font-medium">
+                Join the Movement
               </span>
             </div>
 
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-[#18251F] mb-5">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif leading-tight mb-8">
               Get Involved
             </h1>
 
-            <p className="text-base sm:text-lg text-[#66716B] mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join us in documenting and amplifying African entrepreneurship. Whether you're a founder, researcher, or ecosystem builder, there's a place for you here.
+            <p className="text-xl md:text-2xl text-white/75 leading-relaxed max-w-3xl">
+              Help us document, understand, and amplify the journeys of
+              African founders building solutions that matter.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button 
-                onClick={scrollToForm}
-                className="bg-[#102019] text-white px-7 py-3.5 rounded-full hover:bg-[#159447] transition-all duration-300 font-semibold inline-flex items-center justify-center gap-2 hover:-translate-y-0.5"
-              >
-                Get Started
-                <ArrowRight className="h-4 w-4" />
-              </button>
-
-              <a 
-                href={`mailto:${contactDetails.email}`}
-                className="border border-[#CBC5B7] bg-white text-[#18251F] px-7 py-3.5 rounded-full hover:border-[#159447] hover:text-[#159447] transition-all duration-300 font-semibold inline-flex items-center justify-center gap-2"
-              >
-                <Mail className="h-4 w-4" />
-                Email Us Directly
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pb-20">
-
-        {/* Contact Details */}
-        <div className="mb-16">
-          <div className="bg-[#102019] p-6 sm:p-8 md:p-10 text-white">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-
-              <div className="text-center lg:text-left">
-                <p className="text-xs uppercase tracking-[0.2em] text-[#F2C230] font-semibold mb-2">
-                  01 / Connect
-                </p>
-                <h3 className="font-serif text-2xl sm:text-3xl mb-2">
-                  Partner With Us
-                </h3>
-                <p className="text-[#B9C2BC] text-sm">
-                  Reach out directly to Susan for partnership opportunities.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-
-                <a 
-                  href={`tel:${contactDetails.phone}`}
-                  className="flex items-center gap-3 group p-3 border border-white/10 hover:border-[#159447]/50 transition-all"
-                >
-                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#159447] transition-colors">
-                    <Phone className="h-5 w-5" />
-                  </div>
-
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-[#F2C230]">
-                      Call Susan
-                    </div>
-                    <div className="text-base font-semibold group-hover:text-[#159447] transition-colors">
-                      {contactDetails.phone}
-                    </div>
-                    <div className="text-xs text-[#8F9A94] mt-1 flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {contactDetails.available}
-                    </div>
-                  </div>
-                </a>
-
-                <a 
-                  href={`mailto:${contactDetails.email}`}
-                  className="flex items-center gap-3 group p-3 border border-white/10 hover:border-[#159447]/50 transition-all"
-                >
-                  <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#159447] transition-colors">
-                    <Mail className="h-5 w-5" />
-                  </div>
-
-                  <div>
-                    <div className="text-xs uppercase tracking-wider text-[#F2C230]">
-                      Email Susan
-                    </div>
-                    <div className="text-sm sm:text-base font-semibold group-hover:text-[#159447] transition-colors break-all">
-                      {contactDetails.email}
-                    </div>
-                    <div className="text-xs text-[#8F9A94] mt-1">
-                      Typically replies within 24 hours
-                    </div>
-                  </div>
-                </a>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Ways to Get Involved */}
-        <div className="mb-20">
-
-          <div className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#159447] font-semibold mb-3">
-              02 / Participate
-            </p>
-
-            <h2 className="font-serif text-3xl sm:text-4xl font-medium text-[#18251F] mb-3">
-              Ways to Get Involved
-            </h2>
-
-            <p className="text-[#66716B] max-w-2xl mx-auto text-sm sm:text-base">
-              Choose how you'd like to contribute to documenting African entrepreneurship.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-            {waysToGetInvolved.map((way, index) => (
-              <div 
-                key={index} 
-                className="bg-white border border-[#D5D0C4] p-6 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(16,32,25,0.07)] transition-all duration-300 group"
-              >
-
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-12 h-12 rounded-full ${way.iconBg} flex items-center justify-center`}>
-                    <way.icon className="h-5 w-5 text-white" />
-                  </div>
-
-                  <span className="text-xs font-semibold text-[#9AA19C]">
-                    0{index + 1}
-                  </span>
-                </div>
-
-                <h3 className="font-serif text-xl text-[#18251F] mb-3">
-                  {way.title}
-                </h3>
-
-                <p className="text-sm text-[#66716B] leading-relaxed mb-6">
-                  {way.description}
-                </p>
-
-                <button 
-                  onClick={() => handleActionClick(way.type, way.action)}
-                  className="w-full py-3 bg-[#102019] text-white hover:bg-[#159447] transition-all duration-300 font-semibold text-sm inline-flex items-center justify-center gap-2 group-hover:shadow-md"
-                >
-                  {way.action}
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-
-              </div>
-            ))}
 
           </div>
         </div>
+      </section>
 
-        {/* Form + Info */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+      {/* Contact Intro */}
+      <section className="py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-          {/* Contact Form */}
-          <div 
-            id="contact-form" 
-            className="bg-white p-6 sm:p-8 md:p-10 border border-[#D5D0C4] scroll-mt-20"
-          >
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-            <div className="mb-8">
-              <p className="text-xs uppercase tracking-[0.2em] text-[#159447] font-semibold mb-3">
-                03 / Connect
+            <div>
+              <span className="text-sm font-semibold tracking-widest uppercase text-[#159447]">
+                Let's Connect
+              </span>
+
+              <h2 className="mt-4 text-4xl md:text-5xl font-serif leading-tight">
+                Your contribution can help preserve the stories that
+                shape Africa's future.
+              </h2>
+
+              <p className="mt-6 text-lg text-[#18251F]/70 leading-relaxed">
+                Whether you're a founder, researcher, ecosystem builder,
+                organization, or simply someone passionate about African
+                entrepreneurship, there is a place for you here.
               </p>
 
-              <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#18251F] flex items-center gap-3">
-                <MessageSquare className="h-5 w-5 text-[#159447]" />
-                Send a Message
-              </h2>
+              {/* ONLY EMAIL BUTTON */}
+              <div className="mt-8">
+                <a
+                  href={gmailComposeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-6 py-4 rounded-full bg-[#102019] text-white font-semibold hover:bg-[#159447] transition-all duration-300"
+                >
+                  <Mail size={19} />
+                  Email Us
+                  <ArrowRight size={18} />
+                </a>
+              </div>
             </div>
 
-            {submitted ? (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-[#159447]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="h-8 w-8 text-[#159447]" />
+            <div className="grid sm:grid-cols-2 gap-5">
+
+              <div className="bg-white rounded-2xl p-7 border border-[#18251F]/10 shadow-sm">
+                <div className="w-12 h-12 rounded-xl bg-[#1677C8]/10 flex items-center justify-center mb-5">
+                  <Phone className="text-[#1677C8]" size={22} />
                 </div>
 
-                <h3 className="font-serif text-2xl text-[#18251F] mb-2">
-                  Thank You
+                <h3 className="font-semibold text-lg mb-2">
+                  Call Us
                 </h3>
 
-                <p className="text-[#66716B] text-sm">
-                  Your message has been sent. Susan will get back to you soon.
+                <p className="text-[#18251F]/60 text-sm">
+                  {contactDetails.phone}
                 </p>
               </div>
+
+              <div className="bg-white rounded-2xl p-7 border border-[#18251F]/10 shadow-sm">
+                <div className="w-12 h-12 rounded-xl bg-[#159447]/10 flex items-center justify-center mb-5">
+                  <Mail className="text-[#159447]" size={22} />
+                </div>
+
+                <h3 className="font-semibold text-lg mb-2">
+                  Email
+                </h3>
+
+                <p className="text-[#18251F]/60 text-sm break-all">
+                  {contactDetails.email}
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-7 border border-[#18251F]/10 shadow-sm sm:col-span-2">
+                <div className="w-12 h-12 rounded-xl bg-[#F2C230]/15 flex items-center justify-center mb-5">
+                  <Clock className="text-[#b18b00]" size={22} />
+                </div>
+
+                <h3 className="font-semibold text-lg mb-2">
+                  Availability
+                </h3>
+
+                <p className="text-[#18251F]/60 text-sm">
+                  {contactDetails.available}
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Ways to Get Involved */}
+      <section className="py-20 lg:py-28 bg-[#EAE5DA]/40">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+          <div className="max-w-3xl mb-14">
+            <span className="text-sm font-semibold tracking-widest uppercase text-[#1677C8]">
+              Ways to Contribute
+            </span>
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-serif">
+              There are many ways to be part of the work.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {/* Share Your Story */}
+            <div className="bg-white rounded-3xl p-8 border border-[#18251F]/10 hover:-translate-y-1 transition-all duration-300">
+
+              <div className="w-14 h-14 rounded-2xl bg-[#159447]/10 flex items-center justify-center mb-7">
+                <PenTool className="text-[#159447]" size={25} />
+              </div>
+
+              <h3 className="text-2xl font-serif mb-4">
+                Share Your Story
+              </h3>
+
+              <p className="text-[#18251F]/65 leading-relaxed">
+                Are you building something in Africa? Share your journey,
+                challenges, lessons, and insights with our community.
+              </p>
+
+            </div>
+
+            {/* Research */}
+            <div className="bg-white rounded-3xl p-8 border border-[#18251F]/10 hover:-translate-y-1 transition-all duration-300">
+
+              <div className="w-14 h-14 rounded-2xl bg-[#1677C8]/10 flex items-center justify-center mb-7">
+                <Target className="text-[#1677C8]" size={25} />
+              </div>
+
+              <h3 className="text-2xl font-serif mb-4">
+                Collaborate on Research
+              </h3>
+
+              <p className="text-[#18251F]/65 leading-relaxed">
+                Partner with us on research projects exploring African
+                entrepreneurship, innovation, and social impact.
+              </p>
+
+            </div>
+
+            {/* Community */}
+            <div className="bg-white rounded-3xl p-8 border border-[#18251F]/10 hover:-translate-y-1 transition-all duration-300">
+
+              <div className="w-14 h-14 rounded-2xl bg-[#F2C230]/15 flex items-center justify-center mb-7">
+                <Users className="text-[#b18b00]" size={25} />
+              </div>
+
+              <h3 className="text-2xl font-serif mb-4">
+                Join the Community
+              </h3>
+
+              <p className="text-[#18251F]/65 leading-relaxed">
+                Connect with founders, researchers, ecosystem builders,
+                and others who care about African entrepreneurship.
+              </p>
+
+            </div>
+
+            {/* Partner */}
+            <div className="bg-white rounded-3xl p-8 border border-[#18251F]/10 hover:-translate-y-1 transition-all duration-300">
+
+              <div className="w-14 h-14 rounded-2xl bg-[#159447]/10 flex items-center justify-center mb-7">
+                <Building2 className="text-[#159447]" size={25} />
+              </div>
+
+              <h3 className="text-2xl font-serif mb-4">
+                Partner With Us
+              </h3>
+
+              <p className="text-[#18251F]/65 leading-relaxed">
+                Organizations can support our research, storytelling,
+                founder engagement, and ecosystem-building initiatives.
+              </p>
+
+            </div>
+
+            {/* Support */}
+            <div className="bg-white rounded-3xl p-8 border border-[#18251F]/10 hover:-translate-y-1 transition-all duration-300">
+
+              <div className="w-14 h-14 rounded-2xl bg-[#1677C8]/10 flex items-center justify-center mb-7">
+                <Sparkles className="text-[#1677C8]" size={25} />
+              </div>
+
+              <h3 className="text-2xl font-serif mb-4">
+                Support the Work
+              </h3>
+
+              <p className="text-[#18251F]/65 leading-relaxed">
+                Help us continue documenting founder journeys and
+                producing research that strengthens African ecosystems.
+              </p>
+
+            </div>
+
+            {/* Share */}
+            <div className="bg-white rounded-3xl p-8 border border-[#18251F]/10 hover:-translate-y-1 transition-all duration-300">
+
+              <div className="w-14 h-14 rounded-2xl bg-[#F2C230]/15 flex items-center justify-center mb-7">
+                <Share2 className="text-[#b18b00]" size={25} />
+              </div>
+
+              <h3 className="text-2xl font-serif mb-4">
+                Spread the Word
+              </h3>
+
+              <p className="text-[#18251F]/65 leading-relaxed">
+                Share African Founders Notebook with founders,
+                researchers, organizations, and communities that may
+                benefit from our work.
+              </p>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Get Involved Form */}
+      <section
+        id="get-involved-form"
+        className="py-20 lg:py-28"
+      >
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+
+          <div className="text-center max-w-3xl mx-auto mb-14">
+
+            <span className="text-sm font-semibold tracking-widest uppercase text-[#159447]">
+              Start a Conversation
+            </span>
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-serif">
+              Tell us how you'd like to get involved.
+            </h2>
+
+            <p className="mt-5 text-lg text-[#18251F]/65">
+              Fill in the form below and we'll get back to you.
+            </p>
+
+          </div>
+
+          <div className="bg-white rounded-3xl border border-[#18251F]/10 shadow-sm p-8 md:p-12">
+
+            {submitted ? (
+              <div className="py-16 text-center">
+
+                <div className="w-20 h-20 mx-auto rounded-full bg-[#159447]/10 flex items-center justify-center mb-7">
+                  <CheckCircle
+                    className="text-[#159447]"
+                    size={42}
+                  />
+                </div>
+
+                <h3 className="text-3xl font-serif mb-4">
+                  Thank You!
+                </h3>
+
+                <p className="text-lg text-[#18251F]/65 max-w-xl mx-auto">
+                  Your message has been sent successfully. We'll be in
+                  touch with you soon.
+                </p>
+
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-7"
+              >
 
+                <div className="grid md:grid-cols-2 gap-6">
+
+                  {/* Name */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
-                      Full Name *
+                    <label className="flex items-center gap-2 text-sm font-semibold mb-3">
+                      <User size={16} />
+                      Full Name
                     </label>
 
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
-
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
-                        placeholder="Your name"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Your full name"
+                      className="w-full px-5 py-4 rounded-xl border border-[#18251F]/15 bg-[#F7F5EF] focus:outline-none focus:ring-2 focus:ring-[#159447]/30 focus:border-[#159447] transition-all"
+                    />
                   </div>
 
+                  {/* Email */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
-                      Email Address *
+                    <label className="flex items-center gap-2 text-sm font-semibold mb-3">
+                      <Mail size={16} />
+                      Email Address
                     </label>
 
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
-
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
-                        placeholder="your@email.com"
-                      />
-                    </div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="you@example.com"
+                      className="w-full px-5 py-4 rounded-xl border border-[#18251F]/15 bg-[#F7F5EF] focus:outline-none focus:ring-2 focus:ring-[#159447]/30 focus:border-[#159447] transition-all"
+                    />
                   </div>
 
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="grid md:grid-cols-2 gap-6">
 
+                  {/* Organization */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
+                    <label className="flex items-center gap-2 text-sm font-semibold mb-3">
+                      <Building2 size={16} />
                       Organization
                     </label>
 
-                    <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
-
-                      <input
-                        type="text"
-                        name="organization"
-                        value={formData.organization}
-                        onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
-                        placeholder="Company or organization"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      name="organization"
+                      value={formData.organization}
+                      onChange={handleChange}
+                      placeholder="Organization name"
+                      className="w-full px-5 py-4 rounded-xl border border-[#18251F]/15 bg-[#F7F5EF] focus:outline-none focus:ring-2 focus:ring-[#159447]/30 focus:border-[#159447] transition-all"
+                    />
                   </div>
 
+                  {/* Role */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
+                    <label className="flex items-center gap-2 text-sm font-semibold mb-3">
+                      <Briefcase size={16} />
                       Your Role
                     </label>
 
-                    <div className="relative">
-                      <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#788079]" />
-
-                      <input
-                        type="text"
-                        name="role"
-                        value={formData.role}
-                        onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
-                        placeholder="Founder, Researcher, etc."
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      name="role"
+                      value={formData.role}
+                      onChange={handleChange}
+                      placeholder="Founder, Researcher, etc."
+                      className="w-full px-5 py-4 rounded-xl border border-[#18251F]/15 bg-[#F7F5EF] focus:outline-none focus:ring-2 focus:ring-[#159447]/30 focus:border-[#159447] transition-all"
+                    />
                   </div>
 
                 </div>
 
+                {/* Interest */}
                 <div>
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
-                    How would you like to be involved? *
+                  <label className="flex items-center gap-2 text-sm font-semibold mb-3">
+                    <Target size={16} />
+                    How would you like to get involved?
                   </label>
 
                   <select
@@ -478,20 +533,43 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
                     value={formData.interest}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all"
+                    className="w-full px-5 py-4 rounded-xl border border-[#18251F]/15 bg-[#F7F5EF] focus:outline-none focus:ring-2 focus:ring-[#159447]/30 focus:border-[#159447] transition-all"
                   >
-                    <option value="">Select an option</option>
-                    <option value="share-story">Share my founder story</option>
-                    <option value="partnership">Partnership opportunity</option>
-                    <option value="contribute">Become a contributor</option>
-                    <option value="research">Collaborate on research</option>
-                    <option value="other">Other</option>
+                    <option value="">
+                      Select an option
+                    </option>
+
+                    <option value="Share my story">
+                      Share my story
+                    </option>
+
+                    <option value="Research collaboration">
+                      Research collaboration
+                    </option>
+
+                    <option value="Community">
+                      Join the community
+                    </option>
+
+                    <option value="Partnership">
+                      Partnership
+                    </option>
+
+                    <option value="Support">
+                      Support the work
+                    </option>
+
+                    <option value="Other">
+                      Other
+                    </option>
                   </select>
                 </div>
 
+                {/* Message */}
                 <div>
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#4F5D56] mb-2">
-                    Your Message *
+                  <label className="flex items-center gap-2 text-sm font-semibold mb-3">
+                    <MessageSquare size={16} />
+                    Message
                   </label>
 
                   <textarea
@@ -499,148 +577,143 @@ const GetInvolved: React.FC<GetInvolvedProps> = ({ onBack, onNavigateToContact }
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    rows={5}
-                    className="w-full px-4 py-3 bg-[#F7F5EF] border border-[#D5D0C4] text-[#18251F] placeholder-[#9AA19C] focus:border-[#159447] focus:ring-1 focus:ring-[#159447] outline-none transition-all resize-none"
-                    placeholder="Tell us how you'd like to get involved..."
+                    rows={6}
+                    placeholder="Tell us a little more about how you'd like to get involved..."
+                    className="w-full px-5 py-4 rounded-xl border border-[#18251F]/15 bg-[#F7F5EF] focus:outline-none focus:ring-2 focus:ring-[#159447]/30 focus:border-[#159447] transition-all resize-none"
                   />
                 </div>
 
+                {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-[#102019] text-white hover:bg-[#159447] transition-all duration-300 font-semibold flex items-center justify-center gap-2"
+                  className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#102019] text-white font-semibold hover:bg-[#159447] transition-all duration-300"
                 >
-                  <Send className="h-4 w-4" />
+                  <Send size={19} />
                   Send Message
+                  <ArrowRight size={18} />
                 </button>
 
               </form>
+
             )}
 
           </div>
+        </div>
+      </section>
 
-          {/* Contact Info */}
-          <div className="space-y-6">
+      {/* Quick Contact */}
+      <section className="py-20 bg-[#102019] text-white">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
 
-            {/* Quick Contact */}
-            <div className="bg-[#EAE5DA] p-6 sm:p-8 border border-[#D5D0C4]">
+          <div className="text-center">
 
-              <p className="text-xs uppercase tracking-[0.2em] text-[#159447] font-semibold mb-3">
-                04 / Reach Us
-              </p>
+            <span className="text-sm font-semibold tracking-widest uppercase text-[#F2C230]">
+              Have Questions?
+            </span>
 
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#18251F] mb-6">
-                Quick Contact
-              </h3>
+            <h2 className="mt-4 text-4xl md:text-5xl font-serif">
+              Let's start a conversation.
+            </h2>
 
-              <div className="space-y-4">
+            <p className="mt-5 text-white/65 max-w-2xl mx-auto text-lg">
+              If you have questions or would rather speak directly,
+              reach out using the options below.
+            </p>
 
-                <a 
-                  href={`tel:${contactDetails.phone}`}
-                  className="flex items-start gap-4 p-4 bg-white border border-[#D5D0C4] hover:border-[#159447] transition-all group"
-                >
-                  <Phone className="h-5 w-5 text-[#159447] mt-1 flex-shrink-0" />
+            {/* Phone only — no second email button */}
+            <div className="mt-10 flex justify-center">
 
-                  <div>
-                    <div className="font-semibold text-[#18251F] group-hover:text-[#159447] transition-colors text-sm">
-                      Call Susan
-                    </div>
+              <a
+                href={`tel:${contactDetails.phone}`}
+                className="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full border border-white/20 text-white font-semibold hover:bg-white/10 transition-all duration-300"
+              >
+                <Phone size={19} />
+                Call Us
+              </a>
 
-                    <div className="text-[#4F5D56] mt-1 font-medium">
-                      {contactDetails.phone}
-                    </div>
-
-                    <div className="text-xs text-[#788079] mt-2 flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      Available: {contactDetails.available}
-                    </div>
-                  </div>
-                </a>
-
-                <a 
-                  href={`mailto:${contactDetails.email}`}
-                  className="flex items-start gap-4 p-4 bg-white border border-[#D5D0C4] hover:border-[#159447] transition-all group"
-                >
-                  <Mail className="h-5 w-5 text-[#159447] mt-1 flex-shrink-0" />
-
-                  <div>
-                    <div className="font-semibold text-[#18251F] group-hover:text-[#159447] transition-colors text-sm">
-                      Email Susan
-                    </div>
-
-                    <div className="text-[#4F5D56] mt-1 text-sm font-medium break-all">
-                      {contactDetails.email}
-                    </div>
-
-                    <div className="text-xs text-[#788079] mt-2">
-                      Typically replies within 24 hours
-                    </div>
-                  </div>
-                </a>
-
-              </div>
-            </div>
-
-            {/* What Happens Next */}
-            <div className="bg-[#102019] p-6 sm:p-8 text-white">
-
-              <p className="text-xs uppercase tracking-[0.2em] text-[#F2C230] font-semibold mb-3">
-                05 / The Process
-              </p>
-
-              <h3 className="font-serif text-2xl sm:text-3xl mb-6">
-                What Happens Next?
-              </h3>
-
-              <div className="space-y-4">
-
-                <div className="flex items-start gap-4 border-b border-white/10 pb-4">
-                  <div className="w-8 h-8 rounded-full bg-[#159447] text-white flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                    1
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-sm">Initial Contact</h4>
-                    <p className="text-[#AEB8B2] text-xs mt-1 leading-relaxed">
-                      Susan will respond to discuss your interest.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 border-b border-white/10 pb-4">
-                  <div className="w-8 h-8 rounded-full bg-[#1677C8] text-white flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                    2
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-sm">Discussion</h4>
-                    <p className="text-[#AEB8B2] text-xs mt-1 leading-relaxed">
-                      Explore how you can best contribute to the initiative.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#F2C230] text-[#102019] flex items-center justify-center flex-shrink-0 text-xs font-bold">
-                    3
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-sm">Collaboration</h4>
-                    <p className="text-[#AEB8B2] text-xs mt-1 leading-relaxed">
-                      Start working together on documenting African entrepreneurship.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
             </div>
 
           </div>
+
         </div>
-      </div>
+      </section>
+
+      {/* What Happens Next */}
+      <section className="py-20 lg:py-24">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+
+          <div className="text-center mb-14">
+
+            <span className="text-sm font-semibold tracking-widest uppercase text-[#1677C8]">
+              What Happens Next
+            </span>
+
+            <h2 className="mt-4 text-4xl md:text-5xl font-serif">
+              Simple, human, and collaborative.
+            </h2>
+
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+
+            <div className="text-center">
+
+              <div className="w-14 h-14 mx-auto rounded-full bg-[#1677C8]/10 text-[#1677C8] flex items-center justify-center text-xl font-bold mb-5">
+                01
+              </div>
+
+              <h3 className="text-xl font-semibold mb-3">
+                We Read
+              </h3>
+
+              <p className="text-[#18251F]/60 leading-relaxed">
+                We'll review your message and understand how you'd like
+                to contribute.
+              </p>
+
+            </div>
+
+            <div className="text-center">
+
+              <div className="w-14 h-14 mx-auto rounded-full bg-[#159447]/10 text-[#159447] flex items-center justify-center text-xl font-bold mb-5">
+                02
+              </div>
+
+              <h3 className="text-xl font-semibold mb-3">
+                We Connect
+              </h3>
+
+              <p className="text-[#18251F]/60 leading-relaxed">
+                We'll reach out to discuss your idea, story, or
+                collaboration opportunity.
+              </p>
+
+            </div>
+
+            <div className="text-center">
+
+              <div className="w-14 h-14 mx-auto rounded-full bg-[#F2C230]/15 text-[#b18b00] flex items-center justify-center text-xl font-bold mb-5">
+                03
+              </div>
+
+              <h3 className="text-xl font-semibold mb-3">
+                We Build
+              </h3>
+
+              <p className="text-[#18251F]/60 leading-relaxed">
+                Together, we find meaningful ways to contribute to the
+                African Founders Notebook.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
     </div>
   );
 };
 
 export default GetInvolved;
-
