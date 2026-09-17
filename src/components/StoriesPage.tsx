@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Search,
@@ -19,6 +20,10 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
   const [selectedLocation, setSelectedLocation] = useState('All');
   const [selectedStory, setSelectedStory] =
     useState<FounderStory | null>(null);
+
+  // Newsletter state
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
   const allTags = Array.from(
     new Set(stories.flatMap((story) => story.tags))
@@ -53,6 +58,50 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
   const handleBackToStories = () => {
     setSelectedStory(null);
     window.scrollTo({ top: 0, behavior: 'auto' });
+  };
+
+  // Newsletter subscribe
+  const handleSubscribe = () => {
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      alert('Please enter your email address.');
+      return;
+    }
+
+    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
+
+    if (!emailIsValid) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const recipient = 'susanmaina84@gmail.com';
+
+    const subject = encodeURIComponent(
+      'African Founders Notebook Newsletter Subscription'
+    );
+
+    const body = encodeURIComponent(
+      `Hello Susan,
+
+I would like to subscribe to the African Founders Notebook newsletter.
+
+My email address is: ${trimmedEmail}
+
+Thank you.`
+    );
+
+    // Open Gmail in the browser with the email pre-filled
+    const gmailUrl =
+      `https://mail.google.com/mail/?view=cm&fs=1` +
+      `&to=${recipient}` +
+      `&su=${subject}` +
+      `&body=${body}`;
+
+    window.open(gmailUrl, '_blank');
+
+    setSubscribed(true);
   };
 
   /* FULL STORY */
@@ -373,6 +422,16 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
           <div className="flex flex-col sm:flex-row max-w-xl mx-auto gap-3">
             <input
               type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setSubscribed(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSubscribe();
+                }
+              }}
               placeholder="Your email address"
               className="
                 flex-1
@@ -388,6 +447,7 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
 
             <button
               type="button"
+              onClick={handleSubscribe}
               className="
                 px-6
                 py-3.5
@@ -402,6 +462,12 @@ const StoriesPage: React.FC<StoriesPageProps> = ({ onBack }) => {
               Subscribe
             </button>
           </div>
+
+          {subscribed && (
+            <p className="mt-4 text-sm text-[#F2C230]">
+              Your subscription email has been opened in Gmail.
+            </p>
+          )}
         </div>
       </section>
 
